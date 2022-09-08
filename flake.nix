@@ -27,6 +27,14 @@
                     datetime
                   ];
 
+                test-dependencies =
+                  with purs-nix.ps-pkgs;
+                  [
+                    spec
+                    spec-discovery
+                    spec-quickcheck
+                  ];
+
                 dir = ./.;
               };
         in
