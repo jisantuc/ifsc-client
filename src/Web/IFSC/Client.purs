@@ -1,14 +1,14 @@
 module Web.IFSC.Client where
 
 import Prelude
-import Affjax (Error(..), Response)
+import Affjax (Error(..))
 import Affjax.Node (get)
 import Affjax.ResponseFormat (json)
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, printJsonDecodeError)
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..))
 import Effect.Aff (Aff)
-import Web.IFSC.Model (LandingPage)
+import Web.IFSC.Model (EventResults, LandingPage)
 
 adaptError :: JsonDecodeError -> Error
 adaptError jsErr =
@@ -18,21 +18,25 @@ adaptError jsErr =
 
 getDecodedBody ::
   forall a.
+  forall r.
   DecodeJson a =>
-  Either Error (Response Json) ->
+  Either Error ({ body :: Json | r }) ->
   Either Error a
 getDecodedBody = case _ of
   Right a ->
     ( lmap adaptError
         <<< decodeJson
-        <<< _.body
-        $ a
+        $ a.body
     )
   Left e -> Left e
 
-getLandingPage ::
-  Aff
-    ( Either Error
-        (Response LandingPage)
-    )
-getLandingPage = getDecodedBody <$> get json "https://components.ifsc-climbing.org/results-api.php?api=index"
+getJsonUrl :: forall a. DecodeJson a => String -> Aff (Either Error a)
+getJsonUrl url = getDecodedBody <$> get json url
+
+getLandingPage :: Aff (Either Error LandingPage)
+getLandingPage = getJsonUrl "https://components.ifsc-climbing.org/results-api.php?api=index"
+
+-- getEvent :: Aff (Either Error Event)
+-- getEvent = getJsonUrl "asdf"
+getEventResults :: Aff (Either Error EventResults)
+getEventResults = getJsonUrl "asdf"

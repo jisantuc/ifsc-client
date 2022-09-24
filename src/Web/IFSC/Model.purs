@@ -2,12 +2,15 @@ module Web.IFSC.Model where
 
 import Prelude
 
-import Data.Argonaut (class DecodeJson, JsonDecodeError(..), toString)
+import Data.Argonaut (class DecodeJson, Json, JsonDecodeError(..), toString)
 import Data.Date (Date)
 import Data.Either (Either(..))
-import Data.Maybe (Maybe(..))
+import Data.Generic.Rep (class Generic)
+import Data.Map as M
+import Data.Maybe (maybe)
+import Data.Show.Generic (genericShow)
 import Data.String (toLower)
-import Data.Tuple (Tuple)
+import Data.Tuple (Tuple(..))
 
 type LandingPage
   = { id :: SeasonId
@@ -20,8 +23,12 @@ type LandingPage
 newtype SeasonId
   = SeasonId Int
 
+derive newtype instance DecodeJson SeasonId
+
 newtype SeasonName
   = SeasonName String
+
+derive newtype instance DecodeJson SeasonName
 
 data Discipline
   = Speed
@@ -29,14 +36,20 @@ data Discipline
   | Boulder
   | Combined
 
+derive instance Eq Discipline
+
+derive instance Generic Discipline _
+
+instance Show Discipline where
+  show = genericShow
+
 instance DecodeJson Discipline where
-  decodeJson js = case toLower <$> toString js of
-    Just "speed" -> Right Speed
-    Just "lead" -> Right Lead
-    Just "boulder" -> Right Boulder
-    Just "combined" -> Right Combined
-    Just s -> Left $ TypeMismatch (s <> " is not a valid discipline value")
-    Nothing -> Left $ UnexpectedValue js
+  decodeJson js = decoderForStringMap js $ M.fromFoldable [
+    Tuple "speed" Speed,
+    Tuple "lead" Lead,
+    Tuple "boulder" Boulder,
+    Tuple "combined" Combined
+  ]
 
 type League
   = { id :: Int
@@ -45,6 +58,8 @@ type League
 
 newtype LeagueName
   = LeagueName String
+
+derive newtype instance DecodeJson LeagueName
 
 newtype LeagueId
   = LeagueId Int
@@ -68,6 +83,12 @@ type EventResults
 data CompetitionCategory
   = Men
   | Women
+
+instance DecodeJson CompetitionCategory where
+  decodeJson js = decoderForStringMap js $ M.fromFoldable [
+    Tuple "men" Men,
+    Tuple "women" Women
+  ]
 
 type EventFullResults
   = { ranking :: Array CompetitorResult
@@ -99,3 +120,9 @@ type Ascent
     , topTries :: Int
     , zoneTries :: Int
     }
+
+decoderForStringMap :: forall a. Json -> M.Map String a -> Either JsonDecodeError a
+decoderForStringMap js m =
+  let lookupResult = toLower <$> toString js >>= (flip M.lookup) m
+  in
+    maybe (Left $ UnexpectedValue js) Right lookupResult
