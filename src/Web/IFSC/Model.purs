@@ -1,7 +1,12 @@
 module Web.IFSC.Model where
 
-import Data.Argonaut (class DecodeJson)
+import Prelude
+
+import Data.Argonaut (class DecodeJson, JsonDecodeError(..), toString)
 import Data.Date (Date)
+import Data.Either (Either(..))
+import Data.Maybe (Maybe(..))
+import Data.String (toLower)
 import Data.Tuple (Tuple)
 
 type LandingPage
@@ -24,7 +29,14 @@ data Discipline
   | Boulder
   | Combined
 
-instance DecodeJson Discipline
+instance DecodeJson Discipline where
+  decodeJson js = case toLower <$> toString js of
+    Just "speed" -> Right Speed
+    Just "lead" -> Right Lead
+    Just "boulder" -> Right Boulder
+    Just "combined" -> Right Combined
+    Just s -> Left $ TypeMismatch (s <> " is not a valid discipline value")
+    Nothing -> Left $ UnexpectedValue js
 
 type League
   = { id :: Int
