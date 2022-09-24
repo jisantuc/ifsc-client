@@ -21,8 +21,11 @@
                 dependencies =
                   with purs-nix.ps-pkgs;
                   [
+                    argonaut
+                    argonaut-codecs
                     console
                     effect
+                    affjax-node
                     prelude
                     datetime
                   ];

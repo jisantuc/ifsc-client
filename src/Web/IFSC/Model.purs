@@ -1,5 +1,6 @@
 module Web.IFSC.Model where
 
+import Data.Argonaut (class DecodeJson)
 import Data.Date (Date)
 import Data.Tuple (Tuple)
 
@@ -22,6 +23,8 @@ data Discipline
   | Lead
   | Boulder
   | Combined
+
+instance DecodeJson Discipline
 
 type League
   = { id :: Int
