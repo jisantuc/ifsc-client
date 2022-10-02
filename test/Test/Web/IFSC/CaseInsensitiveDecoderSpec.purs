@@ -1,14 +1,15 @@
 module Test.Web.IFSC.CaseInsensitiveDecoderSpec
-  ( DisciplineCodecPair(..)
+  ( CompetitionCategoryCodecPair(..)
+  , DisciplineCodecPair(..)
   , genCIString
   , spec
-  , testCodec
+  , testDisciplineCodec
   )
   where
 
 import Prelude
 
-import Data.Argonaut (decodeJson, encodeJson)
+import Data.Argonaut (class DecodeJson, decodeJson, encodeJson)
 import Data.Array.NonEmpty as NE
 import Data.Either (Either(..))
 import Data.Foldable (fold)
@@ -20,13 +21,14 @@ import Test.QuickCheck (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen as G
 import Test.Spec (Spec, describe, it)
 import Test.Spec.QuickCheck (quickCheck)
-import Web.IFSC.Model (Discipline(..))
+import Web.IFSC.Model (CompetitionCategory(..), Discipline(..))
 
 spec :: Spec Unit
 spec =
   describe "Case-insensitive strings" do
-    it "Decodes CI-variants of required strings" $
-      quickCheck testCodec
+    it "Decodes CI-variants of required strings" $ do
+      quickCheck testDisciplineCodec
+      quickCheck testCompetitionCategoryCodec
 
 genCIString :: String -> G.Gen String
 genCIString s =
@@ -47,8 +49,14 @@ genCIString s =
           )
           chars
 
-testCodec ∷ DisciplineCodecPair → Boolean
-testCodec (DisciplineCodecPair (Tuple inString expectation)) =
+testDisciplineCodec ∷ DisciplineCodecPair → Boolean
+testDisciplineCodec (DisciplineCodecPair tup) = testCodec' tup
+
+testCompetitionCategoryCodec :: CompetitionCategoryCodecPair -> Boolean
+testCompetitionCategoryCodec (CompetitionCategoryCodecPair tup) = testCodec' tup
+
+testCodec' :: forall a. DecodeJson a => Eq a => Tuple String a  -> Boolean
+testCodec' (Tuple inString expectation) =
   ((decodeJson <<< encodeJson) inString) == (Right expectation)
 
 newtype DisciplineCodecPair = DisciplineCodecPair (Tuple String Discipline)
@@ -65,3 +73,13 @@ instance Arbitrary DisciplineCodecPair where
       >>= (\(DisciplineCodecPair (Tuple inString expectation)) ->
         (\x -> DisciplineCodecPair (Tuple x expectation)) <$> genCIString inString
       )
+
+newtype CompetitionCategoryCodecPair = CompetitionCategoryCodecPair (Tuple String CompetitionCategory)
+
+instance Arbitrary CompetitionCategoryCodecPair where
+  arbitrary =
+    G.elements $
+      CompetitionCategoryCodecPair
+      <$> NE.appendArray (NE.singleton $ Tuple "men" Men) [
+        Tuple "women" Women
+      ]

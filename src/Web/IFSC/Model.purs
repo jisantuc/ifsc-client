@@ -84,6 +84,13 @@ data CompetitionCategory
   = Men
   | Women
 
+derive instance Eq CompetitionCategory
+
+derive instance Generic CompetitionCategory _
+
+instance Show CompetitionCategory where
+  show = genericShow
+
 instance DecodeJson CompetitionCategory where
   decodeJson js = decoderForStringMap js $ M.fromFoldable [
     Tuple "men" Men,
