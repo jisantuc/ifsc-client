@@ -118,6 +118,20 @@ data RoundName
   | SemiFinal
   | Final
 
+derive instance Eq RoundName
+
+derive instance Generic RoundName _
+
+instance Show RoundName where
+  show = genericShow
+
+instance DecodeJson RoundName where
+  decodeJson js = decoderForStringMap js $ M.fromFoldable [
+    Tuple "qualification" Qualification,
+    Tuple "semifinal" SemiFinal,
+    Tuple "final" Final
+  ]
+
 newtype ScoreString
   = ScoreString String
 

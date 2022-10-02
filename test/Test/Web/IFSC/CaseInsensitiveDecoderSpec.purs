@@ -21,7 +21,7 @@ import Test.QuickCheck (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen as G
 import Test.Spec (Spec, describe, it)
 import Test.Spec.QuickCheck (quickCheck)
-import Web.IFSC.Model (CompetitionCategory(..), Discipline(..))
+import Web.IFSC.Model (CompetitionCategory(..), Discipline(..), RoundName(..))
 
 spec :: Spec Unit
 spec =
@@ -29,6 +29,7 @@ spec =
     it "Decodes CI-variants of required strings" $ do
       quickCheck testDisciplineCodec
       quickCheck testCompetitionCategoryCodec
+      quickCheck testRoundNameCodec
 
 genCIString :: String -> G.Gen String
 genCIString s =
@@ -55,6 +56,9 @@ testDisciplineCodec (DisciplineCodecPair tup) = testCodec' tup
 testCompetitionCategoryCodec :: CompetitionCategoryCodecPair -> Boolean
 testCompetitionCategoryCodec (CompetitionCategoryCodecPair tup) = testCodec' tup
 
+testRoundNameCodec :: RoundNameCodecPair -> Boolean
+testRoundNameCodec (RoundNameCodecPair tup) = testCodec' tup
+
 testCodec' :: forall a. DecodeJson a => Eq a => Tuple String a  -> Boolean
 testCodec' (Tuple inString expectation) =
   ((decodeJson <<< encodeJson) inString) == (Right expectation)
@@ -78,8 +82,26 @@ newtype CompetitionCategoryCodecPair = CompetitionCategoryCodecPair (Tuple Strin
 
 instance Arbitrary CompetitionCategoryCodecPair where
   arbitrary =
-    G.elements $
+    (G.elements $
       CompetitionCategoryCodecPair
       <$> NE.appendArray (NE.singleton $ Tuple "men" Men) [
         Tuple "women" Women
+      ])
+      >>= (\(CompetitionCategoryCodecPair (Tuple inString expectation)) ->
+        (\x -> CompetitionCategoryCodecPair (Tuple x expectation)) <$> genCIString inString
+      )
+
+newtype RoundNameCodecPair = RoundNameCodecPair (Tuple String RoundName)
+
+instance Arbitrary RoundNameCodecPair where
+  arbitrary =
+    (G.elements $
+      RoundNameCodecPair <$> NE.appendArray (NE.singleton $ Tuple "qualification" Qualification) [
+        Tuple "semifinal" SemiFinal
+        , Tuple "final" Final
       ]
+    )
+    >>= (\(RoundNameCodecPair (Tuple inString expectation)) ->
+      (\x -> RoundNameCodecPair (Tuple x expectation)) <$> genCIString inString
+    )
+  
