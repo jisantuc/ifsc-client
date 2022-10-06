@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 docker compose up -d
 
 nix develop -c purs-nix test
