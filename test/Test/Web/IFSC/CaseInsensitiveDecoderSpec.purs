@@ -92,7 +92,7 @@ newtype RoundNameCodecPair = RoundNameCodecPair (Tuple String RoundName)
 instance Arbitrary RoundNameCodecPair where
   arbitrary =
     let elems = NE.appendArray (NE.singleton $ Tuple "qualification" Qualification) [
-        Tuple "semifinal" SemiFinal
+        Tuple "semi-final" SemiFinal
         , Tuple "final" Final
       ]
     in
