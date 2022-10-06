@@ -128,7 +128,7 @@ instance Show RoundName where
 instance DecodeJson RoundName where
   decodeJson js = decoderForStringMap js $ M.fromFoldable [
     Tuple "qualification" Qualification,
-    Tuple "semifinal" SemiFinal,
+    Tuple "semi-final" SemiFinal,
     Tuple "final" Final
   ]
 

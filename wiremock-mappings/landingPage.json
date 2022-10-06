@@ -1,0 +1,40 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/results-api.php?api=index"
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "jsonBody": {
+            "seasons": [
+                {
+                    "id": 1234,
+                    "season": "2046",
+                    "url": "/api/v1/seasons/1234",
+                    "discipline_kinds": [
+                        [
+                            0,
+                            "boulder"
+                        ]
+                    ],
+                    "leagues": [
+                        {
+                            "id": 1234,
+                            "name": "World Cups and World Championships",
+                            "cups": [
+                                {
+                                    "id": 72,
+                                    "name": "IFSC Climbing World Cup 2022"
+                                }
+                            ],
+                            "url": "/api/v1/season_leagues/404"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

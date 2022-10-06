@@ -1,23 +1,16 @@
-module Test.Web.IFSC.CaseInsensitiveDecoderSpec
-  ( CompetitionCategoryCodecPair(..)
-  , DisciplineCodecPair(..)
-  , genCIString
-  , spec
-  , testDisciplineCodec
-  )
-  where
+module Test.Web.IFSC.CaseInsensitiveDecoderSpec  where
 
 import Prelude
 
 import Data.Argonaut (class DecodeJson, decodeJson, encodeJson)
+import Data.Array.NonEmpty (NonEmptyArray)
 import Data.Array.NonEmpty as NE
 import Data.Either (Either(..))
 import Data.Foldable (fold)
-import Data.String (toLower, toUpper)
 import Data.String as S
 import Data.Traversable (traverse)
 import Data.Tuple (Tuple(..))
-import Test.QuickCheck (class Arbitrary, arbitrary)
+import Test.QuickCheck (class Arbitrary)
 import Test.QuickCheck.Gen as G
 import Test.Spec (Spec, describe, it)
 import Test.Spec.QuickCheck (quickCheck)
@@ -39,14 +32,17 @@ genCIString s =
     fold
       <$> traverse
           ( \c ->
-              ( \x -> case mod x 1.0 of
-                  d
-                    | d >= 0.67 -> toUpper c
-                  d
-                    | d >= 0.33 -> toLower c
+              ( case _ of
+                  codecPair
+                    | codecPair 
+                    >= 0.67 -> S.toUpper c
+                  codecPair
+
+                    | codecPair 
+                    >= 0.33 -> S.toLower c
                   _ -> c
               )
-                <$> arbitrary
+                <$> G.uniform
           )
           chars
 
@@ -59,49 +55,56 @@ testCompetitionCategoryCodec (CompetitionCategoryCodecPair tup) = testCodec' tup
 testRoundNameCodec :: RoundNameCodecPair -> Boolean
 testRoundNameCodec (RoundNameCodecPair tup) = testCodec' tup
 
-testCodec' :: forall a. DecodeJson a => Eq a => Tuple String a  -> Boolean
+testCodec' :: forall expectationType. DecodeJson expectationType => Eq expectationType => Tuple String expectationType  -> Boolean
 testCodec' (Tuple inString expectation) =
   ((decodeJson <<< encodeJson) inString) == (Right expectation)
+
+newtype CIString = CIString String
+
+derive newtype instance Eq CIString
+
+derive newtype instance Show CIString
 
 newtype DisciplineCodecPair = DisciplineCodecPair (Tuple String Discipline)
 
 instance Arbitrary DisciplineCodecPair where
   arbitrary = 
-      (G.elements 
-        $ DisciplineCodecPair
-        <$> NE.appendArray (NE.singleton $ Tuple "speed" Speed) [
+    let elems = NE.appendArray (NE.singleton $ Tuple "speed" Speed) [
         Tuple "lead" Lead,
         Tuple "boulder" Boulder,
         Tuple "combined" Combined
-      ])
-      >>= (\(DisciplineCodecPair (Tuple inString expectation)) ->
-        (\x -> DisciplineCodecPair (Tuple x expectation)) <$> genCIString inString
-      )
+      ]
+    in
+      arbitraryCodecPair DisciplineCodecPair elems
 
 newtype CompetitionCategoryCodecPair = CompetitionCategoryCodecPair (Tuple String CompetitionCategory)
 
 instance Arbitrary CompetitionCategoryCodecPair where
   arbitrary =
-    (G.elements $
-      CompetitionCategoryCodecPair
-      <$> NE.appendArray (NE.singleton $ Tuple "men" Men) [
+    let elems = NE.appendArray (NE.singleton $ Tuple "men" Men) [
         Tuple "women" Women
-      ])
-      >>= (\(CompetitionCategoryCodecPair (Tuple inString expectation)) ->
-        (\x -> CompetitionCategoryCodecPair (Tuple x expectation)) <$> genCIString inString
-      )
+      ]
+    in
+      arbitraryCodecPair CompetitionCategoryCodecPair elems
 
 newtype RoundNameCodecPair = RoundNameCodecPair (Tuple String RoundName)
 
 instance Arbitrary RoundNameCodecPair where
   arbitrary =
-    (G.elements $
-      RoundNameCodecPair <$> NE.appendArray (NE.singleton $ Tuple "qualification" Qualification) [
+    let elems = NE.appendArray (NE.singleton $ Tuple "qualification" Qualification) [
         Tuple "semifinal" SemiFinal
         , Tuple "final" Final
       ]
-    )
-    >>= (\(RoundNameCodecPair (Tuple inString expectation)) ->
-      (\x -> RoundNameCodecPair (Tuple x expectation)) <$> genCIString inString
-    )
+    in
+      arbitraryCodecPair RoundNameCodecPair elems
   
+arbitraryCodecPair :: forall expectationType codecPair.
+  Show expectationType =>
+ (Tuple String expectationType -> codecPair)
+ -> NonEmptyArray (Tuple String expectationType) -> G.Gen codecPair
+arbitraryCodecPair constructor tupleNonEmptyArray =
+      constructor <$> do
+        withCIString <- traverse (\(Tuple inString expectation) ->
+          (\x -> Tuple x expectation) <$> genCIString inString
+        ) tupleNonEmptyArray
+        G.elements withCIString
