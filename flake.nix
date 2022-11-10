@@ -5,6 +5,11 @@
       ps-tools.follows = "purs-nix/ps-tools";
       purs-nix.url = "github:purs-nix/purs-nix/ps-0.15";
       utils.url = "github:numtide/flake-utils";
+      npmlock2nix =
+        {
+          flake = false;
+          url = "github:nix-community/npmlock2nix";
+        };
     };
 
   outputs = { nixpkgs, utils, ... }@inputs:
@@ -40,7 +45,13 @@
                   ];
 
                 dir = ./.;
+
+                foreign.xhr2.node_modules =
+                  npmlock2nix.node_modules { src = ./.; } + /node_modules;
               };
+
+          npmlock2nix = import inputs.npmlock2nix { inherit pkgs; };
+
         in
         {
           packages.default = ps.modules.Main.bundle { };

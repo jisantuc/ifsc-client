@@ -1,6 +1,6 @@
 # wiremock mappings
 
-The JSON files here supports mocking the IFSC REST API using [`wiremock`].
+The JSON files here support mocking the IFSC REST API using [`wiremock`].
 Because the entities modeled here have relationships to one another,
 certain IDs need to match up for the service to make any sense. Those are (with json paths given in `jq` format):
 

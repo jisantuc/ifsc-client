@@ -25,10 +25,14 @@ newtype SeasonId
 
 derive newtype instance DecodeJson SeasonId
 
+derive newtype instance Show SeasonId
+
 newtype SeasonName
   = SeasonName String
 
 derive newtype instance DecodeJson SeasonName
+
+derive newtype instance Show SeasonName
 
 data Discipline
   = Speed
@@ -60,6 +64,8 @@ newtype LeagueName
   = LeagueName String
 
 derive newtype instance DecodeJson LeagueName
+
+derive newtype instance Show LeagueName
 
 newtype LeagueId
   = LeagueId Int

@@ -1,0 +1,8 @@
+{
+  "name": "ifsc-client",
+  "requires": true,
+  "dependencies": {},
+  "devDependencies": {
+    "xhr2": "^0.2.1"
+  }
+}
