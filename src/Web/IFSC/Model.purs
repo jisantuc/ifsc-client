@@ -2,23 +2,40 @@ module Web.IFSC.Model where
 
 import Prelude
 
-import Data.Argonaut (class DecodeJson, Json, JsonDecodeError(..), toString)
+import Data.Argonaut (class DecodeJson, Json, JsonDecodeError(..), toObject, toString, (.:))
 import Data.Date (Date)
 import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic)
 import Data.Map as M
-import Data.Maybe (maybe)
+import Data.Maybe (Maybe(..), maybe)
 import Data.Show.Generic (genericShow)
 import Data.String (toLower)
 import Data.Tuple (Tuple(..))
 
-type LandingPage
-  = { id :: SeasonId
+type LandingPage = {
+  seasons :: Array LandingPageSeason
+}
+
+newtype LandingPageSeason
+  = LandingPageSeason { id :: SeasonId
     , name :: SeasonName
     , url :: String
     , disciplineKinds :: Array (Tuple Int Discipline)
     , leagues :: Array League
     }
+
+derive newtype instance Show LandingPageSeason
+
+instance DecodeJson LandingPageSeason where
+  decodeJson json = case toObject json of
+    Just jObject -> do 
+       seasonId <- jObject .: "id"
+       name <- jObject .: "name"
+       url <- jObject .: "url"
+       disciplineKinds <- jObject .: "discipline_kinds"
+       leagues <- jObject .: "leagues"
+       Right $ LandingPageSeason { seasonId, name, url, disciplineKinds, leagues }
+    Nothing -> Left $ UnexpectedValue json
 
 newtype SeasonId
   = SeasonId Int
@@ -39,6 +56,7 @@ data Discipline
   | Lead
   | Boulder
   | Combined
+  | BoulderAndLead
 
 derive instance Eq Discipline
 
@@ -52,7 +70,8 @@ instance DecodeJson Discipline where
     Tuple "speed" Speed,
     Tuple "lead" Lead,
     Tuple "boulder" Boulder,
-    Tuple "combined" Combined
+    Tuple "combined" Combined,
+    Tuple "boulder&lead" BoulderAndLead
   ]
 
 type League

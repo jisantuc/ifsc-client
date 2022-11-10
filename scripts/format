@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+targetFile="$1"
+
+purs-tidy format-in-place "{src,test}/**/*.purs"

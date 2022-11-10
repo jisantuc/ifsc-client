@@ -63,8 +63,8 @@
                   with pkgs;
                   [
                     entr
-                    nodejs
-                    nodePackages.purty
+                    nodejs-14_x
+                    nodePackages.purs-tidy
                     (ps.command { })
                     ps-tools.for-0_15.purescript-language-server
                     purs-nix.esbuild
