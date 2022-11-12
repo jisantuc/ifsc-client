@@ -17,7 +17,7 @@ type LandingPage = {
 }
 
 newtype LandingPageSeason
-  = LandingPageSeason { id :: SeasonId
+  = LandingPageSeason { seasonId :: SeasonId
     , name :: SeasonName
     , url :: String
     , disciplineKinds :: Array (Tuple Int Discipline)
