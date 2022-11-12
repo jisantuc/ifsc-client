@@ -1,15 +1,16 @@
 module Test.Web.IFSC.ClientSpec where
 
 import Prelude
+
 import Affjax (Error, printError)
+import Control.Monad.Reader (runReaderT)
 import Data.Bifunctor (lmap)
-import Data.Either (Either(..), isRight)
+import Data.Either (Either, isRight)
 import Effect.Aff (Aff)
 import Effect.Aff.Class (liftAff)
-import Effect.Class.Console (log)
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldSatisfy)
-import Web.IFSC.Client (getLandingPage)
+import Web.IFSC.Client (BaseUrl(..), getLandingPage)
 
 spec :: Spec Unit
 spec =
@@ -28,8 +29,11 @@ adaptError :: forall a. Either Error a -> Either String a
 adaptError = lmap printError
 
 testLandingPage :: Aff Unit
-testLandingPage = do
-  landingPageResult <- getLandingPage
+testLandingPage = 
   let
-    adapted = adaptError landingPageResult
-  adapted `shouldSatisfy` isRight
+    test = do
+       landingPageResult <- getLandingPage
+       let
+         adapted = adaptError landingPageResult
+       adapted `shouldSatisfy` isRight
+  in runReaderT test (BaseUrl "http://localhost:8080") 

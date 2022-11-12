@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+purs-tidy check "{src,test}/**/*.purs"
+
+npm install
+
+purs-nix test
