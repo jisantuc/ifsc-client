@@ -11,7 +11,7 @@ import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, print
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..))
 import Effect.Aff (Aff)
-import Web.IFSC.Model (EventResults, LandingPage)
+import Web.IFSC.Model (EventId, EventResult, LandingPage, disciplineCategoryResults)
 
 newtype BaseUrl = BaseUrl String
 
@@ -46,7 +46,10 @@ getJsonUrl urlPart = do
 getLandingPage :: WithConfig Aff (Either Error LandingPage)
 getLandingPage = getJsonUrl "/results-api.php?api=index"
 
--- getEvent :: Aff (Either Error Event)
+-- getEvent :: WithConfig Aff (Either Error Event)
 -- getEvent = getJsonUrl "asdf"
-getEventResults :: WithConfig Aff (Either Error EventResults)
-getEventResults = getJsonUrl "asdf"
+
+getEventResults :: EventId -> WithConfig Aff (Either Error (Array EventResult))
+getEventResults eventId =
+  ((disciplineCategoryResults <$> _) <$> _)
+    (getJsonUrl $ "/results-api.php?api=event_results&event_id=" <> show eventId)

@@ -12,6 +12,10 @@ import Data.Show.Generic (genericShow)
 import Data.String (toLower)
 import Data.Tuple (Tuple(..))
 
+newtype EventId = EventId Int
+
+derive newtype instance Show EventId
+
 type LandingPage = {
   seasons :: Array LandingPageSeason
 }
@@ -99,11 +103,31 @@ type Event
     , url :: String
     }
 
-type EventResults
-  = { category :: CompetitionCategory
+type EventResultsPage = {
+    d_cats :: Array EventResult
+}
+
+disciplineCategoryResults :: EventResultsPage -> Array EventResult
+disciplineCategoryResults = _.d_cats
+
+newtype EventResult = EventResult
+    { category :: CompetitionCategory
     , discipline :: Discipline
     , fullResultsUrl :: String
     }
+
+derive newtype instance Show EventResult
+
+instance DecodeJson EventResult where
+  decodeJson json = case toObject json of
+    Just jObject ->
+      do 
+       category <- jObject .: "category_name"
+       discipline <- jObject .: "discipline_kind"
+       fullResultsUrl <- jObject .: "full_results_url"
+       pure $ EventResult { category, discipline, fullResultsUrl }
+
+    Nothing -> Left $ UnexpectedValue json
 
 data CompetitionCategory
   = Men
