@@ -10,8 +10,8 @@ import Effect.Aff (Aff)
 import Effect.Aff.Class (liftAff)
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldSatisfy)
-import Web.IFSC.Client (BaseUrl(..), WithConfig, getEventFullResults, getEventResults, getLandingPage)
-import Web.IFSC.Model (EventId(..), ResultUrl(..))
+import Web.IFSC.Client (BaseUrl(..), WithConfig, getEventFullResults, getEventResults, getLandingPage, getSeasonLeagueResults)
+import Web.IFSC.Model (EventId(..), LeagueId(..), ResultUrl(..))
 
 spec :: Spec Unit
 spec =
@@ -50,6 +50,9 @@ smokeTestClientFunction clientMethod =
 testLandingPage :: Aff Unit
 testLandingPage = smokeTestClientFunction getLandingPage
 
+testSeasonLeagueResults :: Aff Unit
+testSeasonLeagueResults = smokeTestClientFunction $ getSeasonLeagueResults (LeagueId 1234)
+
 testEventResults :: Aff Unit
 testEventResults = smokeTestClientFunction $ getEventResults (EventId 9246)
 
@@ -60,6 +63,6 @@ testEventFullResultsWomen :: Aff Unit
 testEventFullResultsWomen = smokeTestClientFunction $ getEventFullResults (ResultUrl "/api/v1/events/9246/result/12")
 
 testWorkflow :: Aff Unit
-testWorkflow = do
-  landingPage <- getLandingPage
+testWorkflow =
+  pure unit
 

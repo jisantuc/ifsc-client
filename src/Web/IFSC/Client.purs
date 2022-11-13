@@ -10,8 +10,9 @@ import Control.Monad.Reader.Class (ask)
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, printJsonDecodeError)
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..))
+import Data.Traversable (sequence, traverse)
 import Effect.Aff (Aff)
-import Web.IFSC.Model (EventFullResults, EventId, EventResult, LandingPage, LeagueId(..), ResultUrl(..), SeasonLeagueResults, disciplineCategoryResults)
+import Web.IFSC.Model (EventFullResults, EventId, EventResult, LandingPage, LandingPageSeason(..), LeagueId(..), ResultUrl(..), SeasonLeagueResults, disciplineCategoryResults)
 
 newtype BaseUrl = BaseUrl String
 
@@ -58,3 +59,15 @@ getEventResults eventId =
 getEventFullResults :: ResultUrl -> WithConfig Aff (Either Error (EventFullResults))
 getEventFullResults (ResultUrl queryParam) =
     getJsonUrl $ "/results-api.php?api=event_full_results&result_url=" <> queryParam
+
+fullSeason :: ReaderT BaseUrl Aff (Either Error (Array SeasonLeagueResults))
+fullSeason = do
+  landingPage <- getLandingPage
+  case landingPage of
+      Right { seasons } -> 
+        let
+            seasonLeagues = seasons >>= (\(LandingPageSeason { leagues }) -> leagues)
+            leagueIds = _.id <$> seasonLeagues
+        in
+            sequence <$> traverse getSeasonLeagueResults leagueIds
+      Left _ -> pure <<< pure $ mempty

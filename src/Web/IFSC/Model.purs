@@ -80,7 +80,7 @@ instance DecodeJson Discipline where
   ]
 
 type League
-  = { id :: Int
+  = { id :: LeagueId
     , name :: LeagueName
     }
 
@@ -93,6 +93,10 @@ derive newtype instance Show LeagueName
 
 newtype LeagueId
   = LeagueId Int
+
+derive newtype instance Show LeagueId
+
+derive newtype instance DecodeJson LeagueId
 
 worldCupsAndWorldChampionships :: LeagueName
 worldCupsAndWorldChampionships = LeagueName "World Cups and World Championships"
