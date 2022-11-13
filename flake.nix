@@ -32,7 +32,6 @@
                     effect
                     affjax-node
                     prelude
-                    datetime
                   ];
 
                 test-dependencies =

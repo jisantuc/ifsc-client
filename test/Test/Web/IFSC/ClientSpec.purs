@@ -10,8 +10,8 @@ import Effect.Aff (Aff)
 import Effect.Aff.Class (liftAff)
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldSatisfy)
-import Web.IFSC.Client (BaseUrl(..), WithConfig, getEventResults, getLandingPage)
-import Web.IFSC.Model (EventId(..))
+import Web.IFSC.Client (BaseUrl(..), WithConfig, getEventFullResults, getEventResults, getLandingPage)
+import Web.IFSC.Model (EventId(..), ResultUrl(..))
 
 spec :: Spec Unit
 spec =
@@ -21,6 +21,12 @@ spec =
           $ liftAff testLandingPage
         it "should fetch event results successfully"
           $ liftAff $ testEventResults
+        it "should fetch event full results successfully"
+          $ liftAff $ do
+            testEventFullResultsMen
+            testEventFullResultsWomen
+        it "fetches all results for a season"
+          $ liftAff testWorkflow
 
 
 -- what do I want to tesT?
@@ -46,3 +52,14 @@ testLandingPage = smokeTestClientFunction getLandingPage
 
 testEventResults :: Aff Unit
 testEventResults = smokeTestClientFunction $ getEventResults (EventId 9246)
+
+testEventFullResultsMen :: Aff Unit
+testEventFullResultsMen = smokeTestClientFunction $ getEventFullResults (ResultUrl "/api/v1/events/9246/result/5")
+
+testEventFullResultsWomen :: Aff Unit
+testEventFullResultsWomen = smokeTestClientFunction $ getEventFullResults (ResultUrl "/api/v1/events/9246/result/12")
+
+testWorkflow :: Aff Unit
+testWorkflow = do
+  landingPage <- getLandingPage
+

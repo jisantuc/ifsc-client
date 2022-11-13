@@ -11,7 +11,7 @@ import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, print
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..))
 import Effect.Aff (Aff)
-import Web.IFSC.Model (EventId, EventResult, LandingPage, disciplineCategoryResults)
+import Web.IFSC.Model (EventFullResults, EventId, EventResult, LandingPage, LeagueId(..), ResultUrl(..), SeasonLeagueResults, disciplineCategoryResults)
 
 newtype BaseUrl = BaseUrl String
 
@@ -46,10 +46,15 @@ getJsonUrl urlPart = do
 getLandingPage :: WithConfig Aff (Either Error LandingPage)
 getLandingPage = getJsonUrl "/results-api.php?api=index"
 
--- getEvent :: WithConfig Aff (Either Error Event)
--- getEvent = getJsonUrl "asdf"
+getSeasonLeagueResults :: LeagueId -> WithConfig Aff (Either Error SeasonLeagueResults)
+getSeasonLeagueResults (LeagueId league) =
+  getJsonUrl $ "/results-api.php?api=season_league_results&league_id=" <> show league
 
 getEventResults :: EventId -> WithConfig Aff (Either Error (Array EventResult))
 getEventResults eventId =
   ((disciplineCategoryResults <$> _) <$> _)
     (getJsonUrl $ "/results-api.php?api=event_results&event_id=" <> show eventId)
+
+getEventFullResults :: ResultUrl -> WithConfig Aff (Either Error (EventFullResults))
+getEventFullResults (ResultUrl queryParam) =
+    getJsonUrl $ "/results-api.php?api=event_full_results&result_url=" <> queryParam

@@ -3,7 +3,6 @@ module Web.IFSC.Model where
 import Prelude
 
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError(..), toObject, toString, (.:))
-import Data.Date (Date)
 import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic)
 import Data.Map as M
@@ -15,6 +14,8 @@ import Data.Tuple (Tuple(..))
 newtype EventId = EventId Int
 
 derive newtype instance Show EventId
+
+newtype ResultUrl = ResultUrl String
 
 type LandingPage = {
   seasons :: Array LandingPageSeason
@@ -96,10 +97,12 @@ newtype LeagueId
 worldCupsAndWorldChampionships :: LeagueName
 worldCupsAndWorldChampionships = LeagueName "World Cups and World Championships"
 
+type SeasonLeagueResults = {
+  events :: Array Event
+}
+
 type Event
-  = { localStartDate :: Date
-    , localEndDate :: Date
-    , event :: String
+  = { event :: String
     , url :: String
     }
 
@@ -150,17 +153,39 @@ type EventFullResults
   = { ranking :: Array CompetitorResult
     }
 
-type CompetitorResult
-  = { firstname :: String
+newtype CompetitorResult
+  = CompetitorResult { firstName :: String
     , lastName :: String
     , rounds :: Array Round
     }
 
-type Round
-  = { roundName :: RoundName
+derive newtype instance Show CompetitorResult
+
+instance DecodeJson CompetitorResult where
+  decodeJson json = case toObject json of
+    Just jObject -> do 
+       firstName <- jObject .: "firstname"
+       lastName <- jObject .: "lastname"
+       rounds <- jObject .: "rounds"
+       pure $ CompetitorResult { firstName, lastName, rounds }
+    Nothing -> Left $ UnexpectedValue json
+
+newtype Round
+  = Round { roundName :: RoundName
     , score :: ScoreString
     , ascents :: Array Ascent
     }
+
+derive newtype instance Show Round
+
+instance DecodeJson Round where
+  decodeJson json = case toObject json of
+    Just jObject -> do
+       roundName <- jObject .: "round_name"
+       score <- jObject .: "score"
+       ascents <- jObject .: "ascents"
+       pure $ Round { roundName, score, ascents }
+    Nothing -> Left $ UnexpectedValue json
 
 data RoundName
   = Qualification
@@ -184,12 +209,28 @@ instance DecodeJson RoundName where
 newtype ScoreString
   = ScoreString String
 
-type Ascent
-  = { top :: Boolean
+derive newtype instance DecodeJson ScoreString
+
+derive newtype instance Show ScoreString
+
+newtype Ascent
+  = Ascent { top :: Boolean
     , zone :: Boolean
     , topTries :: Int
     , zoneTries :: Int
     }
+
+derive newtype instance Show Ascent
+
+instance DecodeJson Ascent where
+  decodeJson json = case toObject json of
+    Just jObject -> do 
+       top <- jObject .: "top"
+       zone <- jObject .: "zone"
+       topTries <- jObject .: "top_tries"
+       zoneTries <- jObject .: "zone_tries"
+       pure $ Ascent { top, zone, topTries, zoneTries }
+    Nothing -> Left $ UnexpectedValue json
 
 decoderForStringMap :: forall a. Json -> M.Map String a -> Either JsonDecodeError a
 decoderForStringMap js m =
