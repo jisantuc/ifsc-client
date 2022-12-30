@@ -19,7 +19,8 @@ import Data.String (Pattern(..), split)
 import Data.Traversable (traverse)
 import Effect.Aff (Aff)
 import Web.IFSC.Model
-  ( Event
+  ( Discipline
+  , Event
   , EventFullResults
   , EventId(..)
   , EventResult(..)
@@ -90,8 +91,8 @@ getEventFullResults :: ResultUrl -> WithConfig (ExceptT Error Aff) EventFullResu
 getEventFullResults (ResultUrl queryParam) =
   getJsonUrl $ "/results-api.php?api=event_full_results&result_url=" <> queryParam
 
-fullSeasons :: Maybe Int -> Maybe Int -> WithConfig (ExceptT Error Aff) (Array EventFullResults)
-fullSeasons fromYear toYear =
+fullSeasons :: Discipline -> Maybe Int -> Maybe Int -> WithConfig (ExceptT Error Aff) (Array EventFullResults)
+fullSeasons searchDiscipline fromYear toYear =
   let
     inRange =
       ( \(LandingPageSeason { name }) ->
@@ -117,9 +118,14 @@ fullSeasons fromYear toYear =
       let allEvents = join <<< join $ seasonLeagueEvents
       eventIds <- lift <<< except $ traverse getEventId allEvents
       eventPartialResultsArrArr <- traverse getEventResults eventIds
-      let eventPartialResults = fold eventPartialResultsArrArr
+      let
+        eventPartialResults =
+          filter
+            ( \(EventResult { discipline }) ->
+                discipline == searchDiscipline
+            ) $ fold eventPartialResultsArrArr
       allFullResults <- traverse getEventFullResults ((\(EventResult { fullResultsUrl }) -> fullResultsUrl) <$> eventPartialResults)
       pure allFullResults
 
-allFullSeasons :: ReaderT BaseUrl (ExceptT Error Aff) (Array EventFullResults)
-allFullSeasons = fullSeasons Nothing Nothing
+allFullSeasons :: Discipline -> ReaderT BaseUrl (ExceptT Error Aff) (Array EventFullResults)
+allFullSeasons discipline = fullSeasons discipline Nothing Nothing
