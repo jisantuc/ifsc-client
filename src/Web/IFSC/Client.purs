@@ -18,7 +18,19 @@ import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (Pattern(..), split)
 import Data.Traversable (traverse)
 import Effect.Aff (Aff)
-import Web.IFSC.Model (Event, EventFullResults, EventId(..), EventResult(..), LandingPage, LandingPageSeason(..), LeagueId(..), ResultUrl(..), SeasonLeagueResults, SeasonName(..), disciplineCategoryResults)
+import Web.IFSC.Model
+  ( Event
+  , EventFullResults
+  , EventId(..)
+  , EventResult(..)
+  , LandingPage
+  , LandingPageSeason(..)
+  , LeagueId(..)
+  , ResultUrl(..)
+  , SeasonLeagueResults
+  , SeasonName(..)
+  , disciplineCategoryResults
+  )
 
 newtype BaseUrl = BaseUrl String
 
