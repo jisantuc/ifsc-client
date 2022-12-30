@@ -1,4 +1,4 @@
-module Test.Web.IFSC.CaseInsensitiveDecoderSpec  where
+module Test.Web.IFSC.CaseInsensitiveDecoderSpec where
 
 import Prelude
 
@@ -31,20 +31,19 @@ genCIString s =
   in
     fold
       <$> traverse
-          ( \c ->
-              ( case _ of
-                  codecPair
-                    | codecPair 
-                    >= 0.67 -> S.toUpper c
-                  codecPair
-
-                    | codecPair 
-                    >= 0.33 -> S.toLower c
-                  _ -> c
-              )
-                <$> G.uniform
-          )
-          chars
+        ( \c ->
+            ( case _ of
+                codecPair
+                  | codecPair
+                      >= 0.67 -> S.toUpper c
+                codecPair
+                  | codecPair
+                      >= 0.33 -> S.toLower c
+                _ -> c
+            )
+              <$> G.uniform
+        )
+        chars
 
 testDisciplineCodec ∷ DisciplineCodecPair → Boolean
 testDisciplineCodec (DisciplineCodecPair tup) = testCodec' tup
@@ -55,7 +54,7 @@ testCompetitionCategoryCodec (CompetitionCategoryCodecPair tup) = testCodec' tup
 testRoundNameCodec :: RoundNameCodecPair -> Boolean
 testRoundNameCodec (RoundNameCodecPair tup) = testCodec' tup
 
-testCodec' :: forall expectationType. DecodeJson expectationType => Eq expectationType => Tuple String expectationType  -> Boolean
+testCodec' :: forall expectationType. DecodeJson expectationType => Eq expectationType => Tuple String expectationType -> Boolean
 testCodec' (Tuple inString expectation) =
   ((decodeJson <<< encodeJson) inString) == (Right expectation)
 
@@ -68,12 +67,13 @@ derive newtype instance Show CIString
 newtype DisciplineCodecPair = DisciplineCodecPair (Tuple String Discipline)
 
 instance Arbitrary DisciplineCodecPair where
-  arbitrary = 
-    let elems = NE.appendArray (NE.singleton $ Tuple "speed" Speed) [
-        Tuple "lead" Lead,
-        Tuple "boulder" Boulder,
-        Tuple "combined" Combined
-      ]
+  arbitrary =
+    let
+      elems = NE.appendArray (NE.singleton $ Tuple "speed" Speed)
+        [ Tuple "lead" Lead
+        , Tuple "boulder" Boulder
+        , Tuple "combined" Combined
+        ]
     in
       arbitraryCodecPair DisciplineCodecPair elems
 
@@ -81,9 +81,10 @@ newtype CompetitionCategoryCodecPair = CompetitionCategoryCodecPair (Tuple Strin
 
 instance Arbitrary CompetitionCategoryCodecPair where
   arbitrary =
-    let elems = NE.appendArray (NE.singleton $ Tuple "men" Men) [
-        Tuple "women" Women
-      ]
+    let
+      elems = NE.appendArray (NE.singleton $ Tuple "men" Men)
+        [ Tuple "women" Women
+        ]
     in
       arbitraryCodecPair CompetitionCategoryCodecPair elems
 
@@ -91,20 +92,25 @@ newtype RoundNameCodecPair = RoundNameCodecPair (Tuple String RoundName)
 
 instance Arbitrary RoundNameCodecPair where
   arbitrary =
-    let elems = NE.appendArray (NE.singleton $ Tuple "qualification" Qualification) [
-        Tuple "semi-final" SemiFinal
+    let
+      elems = NE.appendArray (NE.singleton $ Tuple "qualification" Qualification)
+        [ Tuple "semi-final" SemiFinal
         , Tuple "final" Final
-      ]
+        ]
     in
       arbitraryCodecPair RoundNameCodecPair elems
-  
-arbitraryCodecPair :: forall expectationType codecPair.
-  Show expectationType =>
- (Tuple String expectationType -> codecPair)
- -> NonEmptyArray (Tuple String expectationType) -> G.Gen codecPair
+
+arbitraryCodecPair
+  :: forall expectationType codecPair
+   . Show expectationType
+  => (Tuple String expectationType -> codecPair)
+  -> NonEmptyArray (Tuple String expectationType)
+  -> G.Gen codecPair
 arbitraryCodecPair constructor tupleNonEmptyArray =
-      constructor <$> do
-        withCIString <- traverse (\(Tuple inString expectation) ->
+  constructor <$> do
+    withCIString <- traverse
+      ( \(Tuple inString expectation) ->
           (\x -> Tuple x expectation) <$> genCIString inString
-        ) tupleNonEmptyArray
-        G.elements withCIString
+      )
+      tupleNonEmptyArray
+    G.elements withCIString

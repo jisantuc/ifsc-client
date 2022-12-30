@@ -5,19 +5,37 @@ import Prelude
 import Affjax (Error(..))
 import Affjax.Node (get)
 import Affjax.ResponseFormat (json)
+import Control.Monad.Except (ExceptT(..), except)
 import Control.Monad.Reader (ReaderT, lift)
 import Control.Monad.Reader.Class (ask)
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, printJsonDecodeError)
+import Data.Array (last)
 import Data.Bifunctor (lmap)
-import Data.Either (Either(..))
-import Data.Traversable (sequence, traverse)
+import Data.Either (Either(..), note)
+import Data.Foldable (fold)
+import Data.Int (fromString)
+import Data.String (Pattern(..), split)
+import Data.Traversable (traverse)
 import Effect.Aff (Aff)
-import Web.IFSC.Model (EventFullResults, EventId, EventResult, LandingPage, LandingPageSeason(..), LeagueId(..), ResultUrl(..), SeasonLeagueResults, disciplineCategoryResults)
+import Web.IFSC.Model (Event, EventFullResults, EventId(..), EventResult(..), LandingPage, LandingPageSeason(..), LeagueId(..), ResultUrl(..), SeasonLeagueResults, disciplineCategoryResults)
 
 newtype BaseUrl = BaseUrl String
 
 type WithConfig :: forall k. (k -> Type) -> k -> Type
 type WithConfig m a = ReaderT BaseUrl m a
+
+getEventId :: Event -> Either Error EventId
+getEventId { url } =
+  let
+    segments = split (Pattern "/") url
+    lastSegment = note (RequestContentError "Url segment was empty") $ last segments
+    eventId = lastSegment >>=
+      ( \s ->
+          note (RequestContentError $ "Could not read last url segment to an int in url: " <> url) $
+            EventId <$> fromString s
+      )
+  in
+    eventId
 
 adaptError :: JsonDecodeError -> Error
 adaptError jsErr =
@@ -25,12 +43,12 @@ adaptError jsErr =
     ( "Request failed to produce a meaningful response: " <> printJsonDecodeError jsErr
     )
 
-getDecodedBody ::
-  forall a.
-  forall r.
-  DecodeJson a =>
-  Either Error ({ body :: Json | r }) ->
-  Either Error a
+getDecodedBody
+  :: forall a
+   . forall r
+   . DecodeJson a
+  => Either Error ({ body :: Json | r })
+  -> Either Error a
 getDecodedBody = case _ of
   Right a ->
     ( lmap adaptError
@@ -39,35 +57,41 @@ getDecodedBody = case _ of
     )
   Left e -> Left e
 
-getJsonUrl :: forall a. DecodeJson a => String -> WithConfig Aff (Either Error a)
+getJsonUrl :: forall a. DecodeJson a => String -> WithConfig (ExceptT Error Aff) a
 getJsonUrl urlPart = do
   BaseUrl base <- ask
-  lift $ getDecodedBody <$> get json (base <> urlPart)
+  lift <<< ExceptT $ getDecodedBody <$> get json (base <> urlPart)
 
-getLandingPage :: WithConfig Aff (Either Error LandingPage)
+getLandingPage :: WithConfig (ExceptT Error Aff) LandingPage
 getLandingPage = getJsonUrl "/results-api.php?api=index"
 
-getSeasonLeagueResults :: LeagueId -> WithConfig Aff (Either Error SeasonLeagueResults)
+getSeasonLeagueResults :: LeagueId -> WithConfig (ExceptT Error Aff) SeasonLeagueResults
 getSeasonLeagueResults (LeagueId league) =
-  getJsonUrl $ "/results-api.php?api=season_league_results&league_id=" <> show league
+  getJsonUrl $ "/results-api.php?api=season_league_results&league=" <> show league
 
-getEventResults :: EventId -> WithConfig Aff (Either Error (Array EventResult))
+getEventResults :: EventId -> WithConfig (ExceptT Error Aff) (Array EventResult)
 getEventResults eventId =
-  ((disciplineCategoryResults <$> _) <$> _)
-    (getJsonUrl $ "/results-api.php?api=event_results&event_id=" <> show eventId)
+  disciplineCategoryResults <$> (getJsonUrl $ "/results-api.php?api=event_results&event_id=" <> show eventId)
 
-getEventFullResults :: ResultUrl -> WithConfig Aff (Either Error (EventFullResults))
+getEventFullResults :: ResultUrl -> WithConfig (ExceptT Error Aff) EventFullResults
 getEventFullResults (ResultUrl queryParam) =
-    getJsonUrl $ "/results-api.php?api=event_full_results&result_url=" <> queryParam
+  getJsonUrl $ "/results-api.php?api=event_full_results&result_url=" <> queryParam
 
-fullSeason :: ReaderT BaseUrl Aff (Either Error (Array SeasonLeagueResults))
-fullSeason = do
-  landingPage <- getLandingPage
-  case landingPage of
-      Right { seasons } -> 
+fullSeasons :: WithConfig (ExceptT Error Aff) (Array EventFullResults)
+fullSeasons = do
+  { seasons } <- getLandingPage
+  seasonLeagueEvents <- traverse
+    ( \(LandingPageSeason { leagues }) ->
         let
-            seasonLeagues = seasons >>= (\(LandingPageSeason { leagues }) -> leagues)
-            leagueIds = _.id <$> seasonLeagues
+          leagueIds = _.id <$> leagues
         in
-            sequence <$> traverse getSeasonLeagueResults leagueIds
-      Left _ -> pure <<< pure $ mempty
+          -- for each league, get league results
+          (_.events <$> _) <$> traverse getSeasonLeagueResults leagueIds
+    )
+    seasons
+  let allEvents = join <<< join $ seasonLeagueEvents
+  eventIds <- lift <<< except $ traverse getEventId allEvents
+  eventPartialResultsArrArr <- traverse getEventResults eventIds
+  let eventPartialResults = fold eventPartialResultsArrArr
+  allFullResults <- traverse getEventFullResults ((\(EventResult { fullResultsUrl }) -> fullResultsUrl) <$> eventPartialResults)
+  pure allFullResults
