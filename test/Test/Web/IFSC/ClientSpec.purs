@@ -14,7 +14,7 @@ import Test.Spec.Assertions (fail)
 import Web.IFSC.Client
   ( BaseUrl(..)
   , WithConfig
-  , fullSeasons
+  , allFullSeasons
   , getEventFullResults
   , getEventResults
   , getLandingPage
@@ -77,5 +77,5 @@ testEventFullResultsWomen = smokeTestClientFunction $
 
 testWorkflow :: Aff Unit
 testWorkflow =
-  smokeTestClientFunction fullSeasons
+  smokeTestClientFunction allFullSeasons
 

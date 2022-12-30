@@ -9,15 +9,16 @@ import Control.Monad.Except (ExceptT(..), except)
 import Control.Monad.Reader (ReaderT, lift)
 import Control.Monad.Reader.Class (ask)
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, printJsonDecodeError)
-import Data.Array (last)
+import Data.Array (filter, last)
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..), note)
 import Data.Foldable (fold)
 import Data.Int (fromString)
+import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (Pattern(..), split)
 import Data.Traversable (traverse)
 import Effect.Aff (Aff)
-import Web.IFSC.Model (Event, EventFullResults, EventId(..), EventResult(..), LandingPage, LandingPageSeason(..), LeagueId(..), ResultUrl(..), SeasonLeagueResults, disciplineCategoryResults)
+import Web.IFSC.Model (Event, EventFullResults, EventId(..), EventResult(..), LandingPage, LandingPageSeason(..), LeagueId(..), ResultUrl(..), SeasonLeagueResults, SeasonName(..), disciplineCategoryResults)
 
 newtype BaseUrl = BaseUrl String
 
@@ -77,21 +78,36 @@ getEventFullResults :: ResultUrl -> WithConfig (ExceptT Error Aff) EventFullResu
 getEventFullResults (ResultUrl queryParam) =
   getJsonUrl $ "/results-api.php?api=event_full_results&result_url=" <> queryParam
 
-fullSeasons :: WithConfig (ExceptT Error Aff) (Array EventFullResults)
-fullSeasons = do
-  { seasons } <- getLandingPage
-  seasonLeagueEvents <- traverse
-    ( \(LandingPageSeason { leagues }) ->
-        let
-          leagueIds = _.id <$> leagues
-        in
-          -- for each league, get league results
-          (_.events <$> _) <$> traverse getSeasonLeagueResults leagueIds
-    )
-    seasons
-  let allEvents = join <<< join $ seasonLeagueEvents
-  eventIds <- lift <<< except $ traverse getEventId allEvents
-  eventPartialResultsArrArr <- traverse getEventResults eventIds
-  let eventPartialResults = fold eventPartialResultsArrArr
-  allFullResults <- traverse getEventFullResults ((\(EventResult { fullResultsUrl }) -> fullResultsUrl) <$> eventPartialResults)
-  pure allFullResults
+fullSeasons :: Maybe Int -> Maybe Int -> WithConfig (ExceptT Error Aff) (Array EventFullResults)
+fullSeasons fromYear toYear =
+  let
+    inRange =
+      ( \(LandingPageSeason { name }) ->
+          let
+            (SeasonName y) = name
+          in
+            fromMaybe true ((y >= _) <$> fromYear) &&
+              fromMaybe true ((y <= _) <$> toYear)
+      )
+  in
+    do
+      { seasons } <- getLandingPage
+      let seasonsInRange = filter inRange seasons
+      seasonLeagueEvents <- traverse
+        ( \(LandingPageSeason { leagues }) ->
+            let
+              leagueIds = _.id <$> leagues
+            in
+              -- for each league, get league results
+              (_.events <$> _) <$> traverse getSeasonLeagueResults leagueIds
+        )
+        seasonsInRange
+      let allEvents = join <<< join $ seasonLeagueEvents
+      eventIds <- lift <<< except $ traverse getEventId allEvents
+      eventPartialResultsArrArr <- traverse getEventResults eventIds
+      let eventPartialResults = fold eventPartialResultsArrArr
+      allFullResults <- traverse getEventFullResults ((\(EventResult { fullResultsUrl }) -> fullResultsUrl) <$> eventPartialResults)
+      pure allFullResults
+
+allFullSeasons :: ReaderT BaseUrl (ExceptT Error Aff) (Array EventFullResults)
+allFullSeasons = fullSeasons Nothing Nothing
