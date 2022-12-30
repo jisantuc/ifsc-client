@@ -1,0 +1,52 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/results-api.php?api=index"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "seasons": [
+        {
+          "id": 1234,
+          "name": "2055",
+          "url": "/api/v1/seasons/1234",
+          "discipline_kinds": [
+            [
+              0,
+              "lead"
+            ],
+            [
+              1,
+              "speed"
+            ],
+            [
+              2,
+              "boulder"
+            ],
+            [
+              3,
+              "combined"
+            ],
+            [
+              4,
+              "boulder&lead"
+            ]
+          ],
+          "leagues": [
+            {
+              "id": 1234,
+              "name": "World Cups and World Championships",
+              "cups": [
+              ],
+              "url": "/api/v1/season_leagues/1234"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

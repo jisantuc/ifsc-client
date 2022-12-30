@@ -5,6 +5,11 @@
       ps-tools.follows = "purs-nix/ps-tools";
       purs-nix.url = "github:purs-nix/purs-nix/ps-0.15";
       utils.url = "github:numtide/flake-utils";
+      npmlock2nix =
+        {
+          flake = false;
+          url = "github:nix-community/npmlock2nix";
+        };
     };
 
   outputs = { nixpkgs, utils, ... }@inputs:
@@ -21,22 +26,31 @@
                 dependencies =
                   with purs-nix.ps-pkgs;
                   [
+                    argonaut
+                    argonaut-codecs
                     console
                     effect
+                    affjax-node
                     prelude
-                    datetime
                   ];
 
                 test-dependencies =
                   with purs-nix.ps-pkgs;
                   [
+                    debug
                     spec
                     spec-discovery
                     spec-quickcheck
                   ];
 
                 dir = ./.;
+
+                foreign.xhr2.node_modules =
+                  npmlock2nix.node_modules { src = ./.; };
               };
+
+          npmlock2nix = import inputs.npmlock2nix { inherit pkgs; };
+
         in
         {
           packages.default = ps.modules.Main.bundle { };
@@ -48,8 +62,8 @@
                   with pkgs;
                   [
                     entr
-                    nodejs
-                    nodePackages.purty
+                    nodejs-14_x
+                    nodePackages.purs-tidy
                     (ps.command { })
                     ps-tools.for-0_15.purescript-language-server
                     purs-nix.esbuild

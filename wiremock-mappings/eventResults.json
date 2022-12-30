@@ -1,0 +1,26 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/results-api.php?api=event_results&event_id=9246"
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "jsonBody": {
+            "d_cats": [
+                {
+                    "discipline_kind": "boulder",
+                    "category_name": "Men",
+                    "full_results_url": "/api/v1/events/9246/result/5"
+                },
+                {
+                    "discipline_kind": "boulder",
+                    "category_name": "Women",
+                    "full_results_url": "/api/v1/events/9246/result/12"
+                }
+            ]
+        }
+    }
+}

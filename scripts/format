@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+purs-tidy format-in-place '**/*.purs'
