@@ -5,7 +5,6 @@ import Prelude
 import Affjax (Error, printError)
 import Control.Monad.Except (ExceptT, runExceptT)
 import Control.Monad.Reader (runReaderT)
-import Data.Bifunctor (lmap)
 import Data.Either (Either(..))
 import Effect.Aff (Aff)
 import Effect.Aff.Class (liftAff)
@@ -40,14 +39,6 @@ spec =
           $ liftAff testWorkflow
         it "runs the whole workflow" $
           liftAff testWorkflow
-
--- what do I want to tesT?
--- making a request to the url on the wiremock server
--- results in decoding successfully?
--- results in the specific data?
--- can can encode <-> decode?
-adaptError :: forall a. Either Error a -> Either String a
-adaptError = lmap printError
 
 smokeTestClientFunction :: forall a. Show a => WithConfig (ExceptT Error Aff) a -> Aff Unit
 smokeTestClientFunction clientMethod =
