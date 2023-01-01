@@ -10,7 +10,7 @@ import Control.Monad.Except (ExceptT(..), except)
 import Control.Monad.Reader (ReaderT, lift)
 import Control.Monad.Reader.Class (ask)
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, encodeJson, printJsonDecodeError)
-import Data.Array (filter, last)
+import Data.Array (filter, intersperse, last)
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..), note)
 import Data.Foldable (fold)
@@ -19,6 +19,7 @@ import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (Pattern(..), split)
 import Data.Traversable (traverse)
 import Effect.Aff (Aff)
+import Effect.Class.Console (log)
 import Web.IFSC.Model
   ( Discipline
   , Event
@@ -105,11 +106,15 @@ getSeasonLeagueResults (LeagueId league) =
   getJsonUrl $ "/results-api.php?api=season_leagues_results&league=" <> show league
 
 getEventResults :: EventId -> WithConfig (ExceptT FetchError Aff) (Array EventResult)
-getEventResults eventId =
-  disciplineCategoryResults <$> (getJsonUrl $ "/results-api.php?api=event_results&event_id=" <> show eventId)
+getEventResults eventId = do
+  resultsPage <- getJsonUrl $ "/results-api.php?api=event_results&event_id=" <> show eventId
+  log $ "Results available for " <> resultsPage.name
+  pure $ disciplineCategoryResults resultsPage
 
 getEventFullResults :: ResultUrl -> WithConfig (ExceptT FetchError Aff) EventFullResults
-getEventFullResults (ResultUrl queryParam) =
+getEventFullResults (ResultUrl queryParam) = do
+  BaseUrl baseUrl <- ask
+  log $ "Fetching event results at: " <> baseUrl <> queryParam
   getJsonUrl $ "/results-api.php?api=event_full_results&result_url=" <> queryParam
 
 fullSeasons :: Discipline -> Maybe Int -> Maybe Int -> WithConfig (ExceptT FetchError Aff) (Array EventFullResults)
@@ -127,6 +132,7 @@ fullSeasons searchDiscipline fromYear toYear =
     do
       { seasons } <- getLandingPage
       let seasonsInRange = filter inRange seasons
+      log $ "Fetching events for the following seasons: " <> show ((\(LandingPageSeason { name }) -> name) <$> seasonsInRange)
       seasonLeagueEvents <- traverse
         ( \(LandingPageSeason { leagues }) ->
             let
@@ -143,6 +149,13 @@ fullSeasons searchDiscipline fromYear toYear =
         )
         seasonsInRange
       let allEvents = join <<< join $ seasonLeagueEvents
+      log $ "All events:\n" <>
+        ( let
+            allEventNames = _.event <$> allEvents
+            eventNamesWithNewLines = intersperse "\n" allEventNames
+          in
+            show (fold eventNamesWithNewLines)
+        )
       eventIds <- lift <<< except $ traverse getEventId allEvents
       eventPartialResultsArrArr <- traverse getEventResults eventIds
       let
