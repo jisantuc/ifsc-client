@@ -199,7 +199,8 @@ instance DecodeJson Round where
     Just jObject -> do
       roundName <- jObject .: "round_name"
       score <- jObject .: "score"
-      ascents <- jObject .: "ascents"
+      speedResults <- jObject .: "speed_elimination_stages"
+      ascents <- speedResults .: "ascents"
       pure $ Round { roundName, score, ascents }
     Nothing -> Left $ UnexpectedValue json
 
