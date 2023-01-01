@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "url": "/results-api.php?api=season_league_results&league=1234"
+        "url": "/results-api.php?api=season_leagues_results&league=1234"
     },
     "response": {
         "status": 200,

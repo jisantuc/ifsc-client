@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-purs-tidy format-in-place '**/*.purs'
+purs-tidy format-in-place "src/**/*.purs"
+purs-tidy format-in-place "test/**/*.purs"

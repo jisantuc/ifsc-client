@@ -60,6 +60,8 @@ newtype SeasonName = SeasonName Int
 
 derive newtype instance DecodeJson SeasonName
 
+derive newtype instance Eq SeasonName
+
 derive newtype instance Show SeasonName
 
 data Discipline
@@ -93,6 +95,8 @@ type League =
 newtype LeagueName = LeagueName String
 
 derive newtype instance DecodeJson LeagueName
+
+derive newtype instance Eq LeagueName
 
 derive newtype instance Show LeagueName
 
