@@ -10,7 +10,7 @@ import Control.Monad.Except (ExceptT(..), except)
 import Control.Monad.Reader (ReaderT, lift)
 import Control.Monad.Reader.Class (ask)
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, encodeJson, printJsonDecodeError)
-import Data.Array (filter, intersperse, last)
+import Data.Array (filter, last)
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..), note)
 import Data.Foldable (fold)
@@ -149,13 +149,7 @@ fullSeasons searchDiscipline fromYear toYear =
         )
         seasonsInRange
       let allEvents = join <<< join $ seasonLeagueEvents
-      log $ "All events:\n" <>
-        ( let
-            allEventNames = _.event <$> allEvents
-            eventNamesWithNewLines = intersperse "\n" allEventNames
-          in
-            show (fold eventNamesWithNewLines)
-        )
+      log $ "All events:\n" <> show (_.event <$> allEvents)
       eventIds <- lift <<< except $ traverse getEventId allEvents
       eventPartialResultsArrArr <- traverse getEventResults eventIds
       let
