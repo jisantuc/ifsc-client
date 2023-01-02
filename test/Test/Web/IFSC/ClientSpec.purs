@@ -2,7 +2,7 @@ module Test.Web.IFSC.ClientSpec where
 
 import Prelude
 
-import Affjax (Error, printError)
+import Affjax (printError)
 import Control.Monad.Except (ExceptT, runExceptT)
 import Control.Monad.Reader (runReaderT)
 import Data.Array (length)
@@ -13,6 +13,7 @@ import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (fail, shouldEqual)
 import Web.IFSC.Client
   ( BaseUrl(..)
+  , FetchError(..)
   , WithConfig
   , allFullSeasons
   , getEventFullResults
@@ -20,12 +21,7 @@ import Web.IFSC.Client
   , getLandingPage
   , getSeasonLeagueResults
   )
-import Web.IFSC.Model
-  ( Discipline(..)
-  , EventId(..)
-  , LeagueId(..)
-  , ResultUrl(..)
-  )
+import Web.IFSC.Model (Discipline(..), EventId(..), LeagueId(..), ResultUrl(..))
 
 spec :: Spec Unit
 spec =
@@ -49,15 +45,15 @@ spec =
           liftAff testBoulderOnly
           liftAff testLeadOnly
 
-expectResult :: forall a. Show a => WithConfig (ExceptT Error Aff) a -> (a -> Aff Unit) -> Aff Unit
+expectResult :: forall a. Show a => WithConfig (ExceptT FetchError Aff) a -> (a -> Aff Unit) -> Aff Unit
 expectResult clientMethod expect =
   (runExceptT $ runReaderT clientMethod (BaseUrl "http://localhost:8080")) >>=
     ( case _ of
         Right a -> expect a
-        Left e -> fail $ printError e
+        Left (FetchError e _ _) -> fail $ printError e
     )
 
-smokeTestClientFunction :: forall a. Show a => WithConfig (ExceptT Error Aff) a -> Aff Unit
+smokeTestClientFunction :: forall a. Show a => WithConfig (ExceptT FetchError Aff) a -> Aff Unit
 smokeTestClientFunction clientMethod =
   expectResult clientMethod (void <<< pure)
 

@@ -2,6 +2,7 @@ module Web.IFSC.Model where
 
 import Prelude
 
+import Control.Alternative ((<|>))
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError(..), toObject, toString, (.:))
 import Data.Either (Either(..), note)
 import Data.Generic.Rep (class Generic)
@@ -60,6 +61,8 @@ newtype SeasonName = SeasonName Int
 
 derive newtype instance DecodeJson SeasonName
 
+derive newtype instance Eq SeasonName
+
 derive newtype instance Show SeasonName
 
 data Discipline
@@ -94,6 +97,8 @@ newtype LeagueName = LeagueName String
 
 derive newtype instance DecodeJson LeagueName
 
+derive newtype instance Eq LeagueName
+
 derive newtype instance Show LeagueName
 
 newtype LeagueId = LeagueId Int
@@ -120,6 +125,7 @@ type Event =
 
 type EventResultsPage =
   { d_cats :: Array EventResult
+  , name :: String
   }
 
 disciplineCategoryResults :: EventResultsPage -> Array EventResult
@@ -195,7 +201,11 @@ instance DecodeJson Round where
     Just jObject -> do
       roundName <- jObject .: "round_name"
       score <- jObject .: "score"
-      ascents <- jObject .: "ascents"
+      -- the shape of the API responses changes over time, so decoding has to be
+      -- flexible enough to handle several formats
+      ascents <- jObject .: "ascents" <|>
+        ( jObject .: "speed_elimination_stages" >>= (\obj -> obj .: "ascents")
+        )
       pure $ Round { roundName, score, ascents }
     Nothing -> Left $ UnexpectedValue json
 
@@ -227,8 +237,8 @@ derive newtype instance Show ScoreString
 newtype Ascent = Ascent
   { top :: Boolean
   , zone :: Boolean
-  , topTries :: Int
-  , zoneTries :: Int
+  , topTries :: Maybe Int
+  , zoneTries :: Maybe Int
   }
 
 derive newtype instance Show Ascent

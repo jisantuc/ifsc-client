@@ -31,6 +31,7 @@
                     console
                     effect
                     affjax-node
+                    optparse
                     prelude
                   ];
 

@@ -1,1228 +1,1264 @@
 {
-    "request": {
-        "method": "GET",
-        "url": "/results-api.php?api=event_full_results&result_url=/api/v1/events/9246/result/12"
+  "request": {
+    "method": "GET",
+    "url": "/results-api.php?api=event_full_results&result_url=/api/v1/events/9246/result/12"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
     },
-    "response": {
-        "status": 200,
-        "headers": {
-            "Content-Type": "application/json"
+    "jsonBody": {
+      "ranking": [
+        {
+          "athlete_id": 1803,
+          "rank": 1,
+          "firstname": "Natalia",
+          "lastname": "GROSSMAN",
+          "paraclimbing_sport_class": null,
+          "sport_class_status": null,
+          "country": "USA",
+          "federation_id": 20,
+          "rounds": [
+            {
+              "category_round_id": 6849,
+              "round_name": "Qualification",
+              "score": "5T5z 6 5",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7619,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:34:51 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7620,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:00 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7621,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:07 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7622,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:14 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7623,
+                    "route_name": "5",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:07 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7424,
+              "round_name": "Semi-final",
+              "score": "4T4z 10 10",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7628,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:51:15 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7629,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 6,
+                    "zone": true,
+                    "zone_tries": 6,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:57:41 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7630,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:08:16 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7631,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:20:14 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7426,
+              "round_name": "Final",
+              "score": "4T4z 7 5",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7636,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:18 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7637,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:34 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7638,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:07 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7639,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:41 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            }
+          ]
         },
-        "jsonBody": {
-            "ranking": [
-                {
-                    "athlete_id": 1803,
-                    "rank": 1,
-                    "firstname": "Natalia",
-                    "lastname": "GROSSMAN",
-                    "paraclimbing_sport_class": null,
-                    "sport_class_status": null,
-                    "country": "USA",
-                    "federation_id": 20,
-                    "rounds": [
-                        {
-                            "category_round_id": 6849,
-                            "round_name": "Qualification",
-                            "score": "5T5z 6 5",
-                            "ascents": [
-                                {
-                                    "route_id": 7619,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:34:51 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7620,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:00 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7621,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:07 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7622,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:14 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7623,
-                                    "route_name": "5",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:07 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7424,
-                            "round_name": "Semi-final",
-                            "score": "4T4z 10 10",
-                            "ascents": [
-                                {
-                                    "route_id": 7628,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:51:15 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7629,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 6,
-                                    "zone": true,
-                                    "zone_tries": 6,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:57:41 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7630,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:08:16 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7631,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:20:14 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7426,
-                            "round_name": "Final",
-                            "score": "4T4z 7 5",
-                            "ascents": [
-                                {
-                                    "route_id": 7636,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:18 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7637,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:34 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7638,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:07 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7639,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:41 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "athlete_id": 11462,
-                    "rank": 2,
-                    "firstname": "Oriane",
-                    "lastname": "BERTONE",
-                    "paraclimbing_sport_class": null,
-                    "sport_class_status": null,
-                    "country": "FRA",
-                    "federation_id": 10,
-                    "rounds": [
-                        {
-                            "category_round_id": 6849,
-                            "round_name": "Qualification",
-                            "score": "4T5z 10 7",
-                            "ascents": [
-                                {
-                                    "route_id": 7619,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:35:06 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7620,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:35:56 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7621,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:08 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7622,
-                                    "route_name": "4",
-                                    "top": false,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:38:40 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7623,
-                                    "route_name": "5",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:07 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7424,
-                            "round_name": "Semi-final",
-                            "score": "3T3z 5 5",
-                            "ascents": [
-                                {
-                                    "route_id": 7628,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:51:13 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7629,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:57:40 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7630,
-                                    "route_name": "3",
-                                    "top": false,
-                                    "top_tries": 6,
-                                    "zone": false,
-                                    "zone_tries": 6,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:08:14 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7631,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 3,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:20:11 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7426,
-                            "round_name": "Final",
-                            "score": "3T4z 5 5",
-                            "ascents": [
-                                {
-                                    "route_id": 7636,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:21 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7637,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:32 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7638,
-                                    "route_name": "3",
-                                    "top": false,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:09 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7639,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:43 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "athlete_id": 1811,
-                    "rank": 3,
-                    "firstname": "Brooke",
-                    "lastname": "RABOUTOU",
-                    "paraclimbing_sport_class": null,
-                    "sport_class_status": null,
-                    "country": "USA",
-                    "federation_id": 20,
-                    "rounds": [
-                        {
-                            "category_round_id": 6849,
-                            "round_name": "Qualification",
-                            "score": "2T4z 7 8",
-                            "ascents": [
-                                {
-                                    "route_id": 7619,
-                                    "route_name": "1",
-                                    "top": false,
-                                    "top_tries": 11,
-                                    "zone": false,
-                                    "zone_tries": 11,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:34:59 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7620,
-                                    "route_name": "2",
-                                    "top": false,
-                                    "top_tries": 6,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:35:53 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7621,
-                                    "route_name": "3",
-                                    "top": false,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:05 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7622,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:27 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7623,
-                                    "route_name": "5",
-                                    "top": true,
-                                    "top_tries": 5,
-                                    "zone": true,
-                                    "zone_tries": 5,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:11 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7424,
-                            "round_name": "Semi-final",
-                            "score": "3T4z 11 10",
-                            "ascents": [
-                                {
-                                    "route_id": 7628,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 4,
-                                    "zone": true,
-                                    "zone_tries": 3,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:51:06 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7629,
-                                    "route_name": "2",
-                                    "top": false,
-                                    "top_tries": 8,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:57:33 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7630,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:08:07 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7631,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 4,
-                                    "zone": true,
-                                    "zone_tries": 4,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:20:05 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7426,
-                            "round_name": "Final",
-                            "score": "3T3z 6 5",
-                            "ascents": [
-                                {
-                                    "route_id": 7636,
-                                    "route_name": "1",
-                                    "top": false,
-                                    "top_tries": 10,
-                                    "zone": false,
-                                    "zone_tries": 10,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:20 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7637,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:32 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7638,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:09 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7639,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:43 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "athlete_id": 3840,
-                    "rank": 4,
-                    "firstname": "Stasa",
-                    "lastname": "GEJO",
-                    "paraclimbing_sport_class": null,
-                    "sport_class_status": null,
-                    "country": "SRB",
-                    "federation_id": 56,
-                    "rounds": [
-                        {
-                            "category_round_id": 6849,
-                            "round_name": "Qualification",
-                            "score": "5T5z 10 8",
-                            "ascents": [
-                                {
-                                    "route_id": 7619,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:34:53 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7620,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 4,
-                                    "zone": true,
-                                    "zone_tries": 3,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:35:52 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7621,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:08 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7622,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:28 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7623,
-                                    "route_name": "5",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:06 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7424,
-                            "round_name": "Semi-final",
-                            "score": "3T3z 8 7",
-                            "ascents": [
-                                {
-                                    "route_id": 7628,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 3,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:51:14 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7629,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 4,
-                                    "zone": true,
-                                    "zone_tries": 3,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:57:41 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7630,
-                                    "route_name": "3",
-                                    "top": false,
-                                    "top_tries": 5,
-                                    "zone": false,
-                                    "zone_tries": 5,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:08:15 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7631,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:20:12 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7426,
-                            "round_name": "Final",
-                            "score": "2T4z 3 13",
-                            "ascents": [
-                                {
-                                    "route_id": 7636,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:21 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7637,
-                                    "route_name": "2",
-                                    "top": false,
-                                    "top_tries": 6,
-                                    "zone": true,
-                                    "zone_tries": 6,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:32 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7638,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:10 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7639,
-                                    "route_name": "4",
-                                    "top": false,
-                                    "top_tries": 5,
-                                    "zone": true,
-                                    "zone_tries": 5,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:44 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "athlete_id": 947,
-                    "rank": 5,
-                    "firstname": "Camilla",
-                    "lastname": "MORONI",
-                    "paraclimbing_sport_class": null,
-                    "sport_class_status": null,
-                    "country": "ITA",
-                    "federation_id": 13,
-                    "rounds": [
-                        {
-                            "category_round_id": 6849,
-                            "round_name": "Qualification",
-                            "score": "4T5z 5 8",
-                            "ascents": [
-                                {
-                                    "route_id": 7619,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:35:58 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7620,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:00 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7621,
-                                    "route_name": "3",
-                                    "top": false,
-                                    "top_tries": 5,
-                                    "zone": true,
-                                    "zone_tries": 4,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:07 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7622,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:29 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7623,
-                                    "route_name": "5",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:36:07 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7424,
-                            "round_name": "Semi-final",
-                            "score": "4T4z 18 15",
-                            "ascents": [
-                                {
-                                    "route_id": 7628,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 3,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:51:14 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7629,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 9,
-                                    "zone": true,
-                                    "zone_tries": 8,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:57:40 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7630,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:08:15 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7631,
-                                    "route_name": "4",
-                                    "top": true,
-                                    "top_tries": 4,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:20:12 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7426,
-                            "round_name": "Final",
-                            "score": "1T2z 6 8",
-                            "ascents": [
-                                {
-                                    "route_id": 7636,
-                                    "route_name": "1",
-                                    "top": false,
-                                    "top_tries": 9,
-                                    "zone": false,
-                                    "zone_tries": 9,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:19 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7637,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 6,
-                                    "zone": true,
-                                    "zone_tries": 6,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:33 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7638,
-                                    "route_name": "3",
-                                    "top": false,
-                                    "top_tries": 4,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:07 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7639,
-                                    "route_name": "4",
-                                    "top": false,
-                                    "top_tries": 7,
-                                    "zone": false,
-                                    "zone_tries": 7,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:42 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "athlete_id": 13321,
-                    "rank": 6,
-                    "firstname": "Mia",
-                    "lastname": "AOYAGI",
-                    "paraclimbing_sport_class": null,
-                    "sport_class_status": null,
-                    "country": "JPN",
-                    "federation_id": 25,
-                    "rounds": [
-                        {
-                            "category_round_id": 6849,
-                            "round_name": "Qualification",
-                            "score": "3T3z 7 6",
-                            "ascents": [
-                                {
-                                    "route_id": 7619,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 1,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:37:12 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7620,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:37:13 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7621,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 4,
-                                    "zone": true,
-                                    "zone_tries": 4,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:37:24 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7622,
-                                    "route_name": "4",
-                                    "top": false,
-                                    "top_tries": 5,
-                                    "zone": false,
-                                    "zone_tries": 5,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:37:24 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7623,
-                                    "route_name": "5",
-                                    "top": false,
-                                    "top_tries": 5,
-                                    "zone": false,
-                                    "zone_tries": 5,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-07 05:37:30 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7424,
-                            "round_name": "Semi-final",
-                            "score": "3T4z 8 12",
-                            "ascents": [
-                                {
-                                    "route_id": 7628,
-                                    "route_name": "1",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 3,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:51:09 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7629,
-                                    "route_name": "2",
-                                    "top": true,
-                                    "top_tries": 2,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 03:57:35 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7630,
-                                    "route_name": "3",
-                                    "top": true,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 3,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:08:11 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7631,
-                                    "route_name": "4",
-                                    "top": false,
-                                    "top_tries": 6,
-                                    "zone": true,
-                                    "zone_tries": 4,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 04:20:08 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        },
-                        {
-                            "category_round_id": 7426,
-                            "round_name": "Final",
-                            "score": "0T3z 0 4",
-                            "ascents": [
-                                {
-                                    "route_id": 7636,
-                                    "route_name": "1",
-                                    "top": false,
-                                    "top_tries": 5,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:20 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7637,
-                                    "route_name": "2",
-                                    "top": false,
-                                    "top_tries": 4,
-                                    "zone": true,
-                                    "zone_tries": 2,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:33 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7638,
-                                    "route_name": "3",
-                                    "top": false,
-                                    "top_tries": 3,
-                                    "zone": true,
-                                    "zone_tries": 1,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:26:08 +00:00",
-                                    "status": "locked"
-                                },
-                                {
-                                    "route_id": 7639,
-                                    "route_name": "4",
-                                    "top": false,
-                                    "top_tries": 8,
-                                    "zone": false,
-                                    "zone_tries": 8,
-                                    "low_zone": null,
-                                    "points": null,
-                                    "low_zone_tries": null,
-                                    "modified": "2022-05-08 09:59:42 +00:00",
-                                    "status": "locked"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+        {
+          "athlete_id": 11462,
+          "rank": 2,
+          "firstname": "Oriane",
+          "lastname": "BERTONE",
+          "paraclimbing_sport_class": null,
+          "sport_class_status": null,
+          "country": "FRA",
+          "federation_id": 10,
+          "rounds": [
+            {
+              "category_round_id": 6849,
+              "round_name": "Qualification",
+              "score": "4T5z 10 7",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7619,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:35:06 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7620,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:35:56 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7621,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:08 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7622,
+                    "route_name": "4",
+                    "top": false,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:38:40 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7623,
+                    "route_name": "5",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:07 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7424,
+              "round_name": "Semi-final",
+              "score": "3T3z 5 5",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7628,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:51:13 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7629,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:57:40 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7630,
+                    "route_name": "3",
+                    "top": false,
+                    "top_tries": 6,
+                    "zone": false,
+                    "zone_tries": 6,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:08:14 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7631,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 3,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:20:11 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7426,
+              "round_name": "Final",
+              "score": "3T4z 5 5",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7636,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:21 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7637,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:32 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7638,
+                    "route_name": "3",
+                    "top": false,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:09 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7639,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:43 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "athlete_id": 1811,
+          "rank": 3,
+          "firstname": "Brooke",
+          "lastname": "RABOUTOU",
+          "paraclimbing_sport_class": null,
+          "sport_class_status": null,
+          "country": "USA",
+          "federation_id": 20,
+          "rounds": [
+            {
+              "category_round_id": 6849,
+              "round_name": "Qualification",
+              "score": "2T4z 7 8",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7619,
+                    "route_name": "1",
+                    "top": false,
+                    "top_tries": 11,
+                    "zone": false,
+                    "zone_tries": 11,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:34:59 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7620,
+                    "route_name": "2",
+                    "top": false,
+                    "top_tries": 6,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:35:53 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7621,
+                    "route_name": "3",
+                    "top": false,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:05 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7622,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:27 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7623,
+                    "route_name": "5",
+                    "top": true,
+                    "top_tries": 5,
+                    "zone": true,
+                    "zone_tries": 5,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:11 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7424,
+              "round_name": "Semi-final",
+              "score": "3T4z 11 10",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7628,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 4,
+                    "zone": true,
+                    "zone_tries": 3,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:51:06 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7629,
+                    "route_name": "2",
+                    "top": false,
+                    "top_tries": 8,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:57:33 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7630,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:08:07 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7631,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 4,
+                    "zone": true,
+                    "zone_tries": 4,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:20:05 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7426,
+              "round_name": "Final",
+              "score": "3T3z 6 5",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7636,
+                    "route_name": "1",
+                    "top": false,
+                    "top_tries": 10,
+                    "zone": false,
+                    "zone_tries": 10,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:20 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7637,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:32 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7638,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:09 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7639,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:43 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "athlete_id": 3840,
+          "rank": 4,
+          "firstname": "Stasa",
+          "lastname": "GEJO",
+          "paraclimbing_sport_class": null,
+          "sport_class_status": null,
+          "country": "SRB",
+          "federation_id": 56,
+          "rounds": [
+            {
+              "category_round_id": 6849,
+              "round_name": "Qualification",
+              "score": "5T5z 10 8",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7619,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:34:53 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7620,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 4,
+                    "zone": true,
+                    "zone_tries": 3,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:35:52 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7621,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:08 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7622,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:28 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7623,
+                    "route_name": "5",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:06 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7424,
+              "round_name": "Semi-final",
+              "score": "3T3z 8 7",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7628,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 3,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:51:14 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7629,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 4,
+                    "zone": true,
+                    "zone_tries": 3,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:57:41 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7630,
+                    "route_name": "3",
+                    "top": false,
+                    "top_tries": 5,
+                    "zone": false,
+                    "zone_tries": 5,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:08:15 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7631,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:20:12 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7426,
+              "round_name": "Final",
+              "score": "2T4z 3 13",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7636,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:21 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7637,
+                    "route_name": "2",
+                    "top": false,
+                    "top_tries": 6,
+                    "zone": true,
+                    "zone_tries": 6,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:32 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7638,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:10 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7639,
+                    "route_name": "4",
+                    "top": false,
+                    "top_tries": 5,
+                    "zone": true,
+                    "zone_tries": 5,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:44 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "athlete_id": 947,
+          "rank": 5,
+          "firstname": "Camilla",
+          "lastname": "MORONI",
+          "paraclimbing_sport_class": null,
+          "sport_class_status": null,
+          "country": "ITA",
+          "federation_id": 13,
+          "rounds": [
+            {
+              "category_round_id": 6849,
+              "round_name": "Qualification",
+              "score": "4T5z 5 8",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7619,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:35:58 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7620,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:00 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7621,
+                    "route_name": "3",
+                    "top": false,
+                    "top_tries": 5,
+                    "zone": true,
+                    "zone_tries": 4,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:07 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7622,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:29 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7623,
+                    "route_name": "5",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:36:07 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7424,
+              "round_name": "Semi-final",
+              "score": "4T4z 18 15",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7628,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 3,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:51:14 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7629,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 9,
+                    "zone": true,
+                    "zone_tries": 8,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:57:40 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7630,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:08:15 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7631,
+                    "route_name": "4",
+                    "top": true,
+                    "top_tries": 4,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:20:12 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7426,
+              "round_name": "Final",
+              "score": "1T2z 6 8",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7636,
+                    "route_name": "1",
+                    "top": false,
+                    "top_tries": 9,
+                    "zone": false,
+                    "zone_tries": 9,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:19 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7637,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 6,
+                    "zone": true,
+                    "zone_tries": 6,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:33 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7638,
+                    "route_name": "3",
+                    "top": false,
+                    "top_tries": 4,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:07 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7639,
+                    "route_name": "4",
+                    "top": false,
+                    "top_tries": 7,
+                    "zone": false,
+                    "zone_tries": 7,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:42 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "athlete_id": 13321,
+          "rank": 6,
+          "firstname": "Mia",
+          "lastname": "AOYAGI",
+          "paraclimbing_sport_class": null,
+          "sport_class_status": null,
+          "country": "JPN",
+          "federation_id": 25,
+          "rounds": [
+            {
+              "category_round_id": 6849,
+              "round_name": "Qualification",
+              "score": "3T3z 7 6",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7619,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 1,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:37:12 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7620,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:37:13 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7621,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 4,
+                    "zone": true,
+                    "zone_tries": 4,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:37:24 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7622,
+                    "route_name": "4",
+                    "top": false,
+                    "top_tries": 5,
+                    "zone": false,
+                    "zone_tries": 5,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:37:24 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7623,
+                    "route_name": "5",
+                    "top": false,
+                    "top_tries": 5,
+                    "zone": false,
+                    "zone_tries": 5,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-07 05:37:30 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7424,
+              "round_name": "Semi-final",
+              "score": "3T4z 8 12",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7628,
+                    "route_name": "1",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 3,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:51:09 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7629,
+                    "route_name": "2",
+                    "top": true,
+                    "top_tries": 2,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 03:57:35 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7630,
+                    "route_name": "3",
+                    "top": true,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 3,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:08:11 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7631,
+                    "route_name": "4",
+                    "top": false,
+                    "top_tries": 6,
+                    "zone": true,
+                    "zone_tries": 4,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 04:20:08 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            },
+            {
+              "category_round_id": 7426,
+              "round_name": "Final",
+              "score": "0T3z 0 4",
+              "speed_elimination_stages": {
+                "ascents": [
+                  {
+                    "route_id": 7636,
+                    "route_name": "1",
+                    "top": false,
+                    "top_tries": 5,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:20 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7637,
+                    "route_name": "2",
+                    "top": false,
+                    "top_tries": 4,
+                    "zone": true,
+                    "zone_tries": 2,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:33 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7638,
+                    "route_name": "3",
+                    "top": false,
+                    "top_tries": 3,
+                    "zone": true,
+                    "zone_tries": 1,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:26:08 +00:00",
+                    "status": "locked"
+                  },
+                  {
+                    "route_id": 7639,
+                    "route_name": "4",
+                    "top": false,
+                    "top_tries": 8,
+                    "zone": false,
+                    "zone_tries": 8,
+                    "low_zone": null,
+                    "points": null,
+                    "low_zone_tries": null,
+                    "modified": "2022-05-08 09:59:42 +00:00",
+                    "status": "locked"
+                  }
+                ]
+              }
+            }
+          ]
         }
+      ]
     }
+  }
 }

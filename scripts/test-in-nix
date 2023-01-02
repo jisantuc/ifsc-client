@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-purs-tidy check "{src,test}/**/*.purs"
+set -e
+
+purs-tidy check "src/**/*.purs"
+
+purs-tidy check "test/**/*.purs"
 
 npm install
 
