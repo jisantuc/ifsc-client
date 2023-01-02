@@ -237,8 +237,8 @@ derive newtype instance Show ScoreString
 newtype Ascent = Ascent
   { top :: Boolean
   , zone :: Boolean
-  , topTries :: Int
-  , zoneTries :: Int
+  , topTries :: Maybe Int
+  , zoneTries :: Maybe Int
   }
 
 derive newtype instance Show Ascent
