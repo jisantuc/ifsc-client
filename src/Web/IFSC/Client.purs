@@ -13,7 +13,7 @@ import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, encod
 import Data.Array (filter, last)
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..), note)
-import Data.Foldable (fold)
+import Data.Foldable (fold, intercalate)
 import Data.Int (fromString)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (Pattern(..), split)
@@ -149,7 +149,11 @@ fullSeasons searchDiscipline fromYear toYear =
         )
         seasonsInRange
       let allEvents = join <<< join $ seasonLeagueEvents
-      log $ "All events:\n" <> show (_.event <$> allEvents)
+      log $ "All events:\n" <>
+        let
+          allEventNames = _.event <$> allEvents
+        in
+          intercalate "\n" allEventNames
       eventIds <- lift <<< except $ traverse getEventId allEvents
       eventPartialResultsArrArr <- traverse getEventResults eventIds
       let

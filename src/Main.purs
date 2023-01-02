@@ -7,12 +7,12 @@ import Cli.Parser (EndSeason(..), FetchParams(..), StartSeason(..), progOpts)
 import Control.Monad.Except (runExceptT)
 import Control.Monad.Reader (runReaderT)
 import Data.Argonaut (stringify)
-import Data.Array (intersperse)
 import Data.Either (Either(..))
+import Data.Foldable (intercalate)
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Aff (launchAff_)
-import Effect.Class.Console (log, logShow)
+import Effect.Class.Console (log)
 import Options.Applicative (execParser)
 import Web.IFSC.Client (FetchError(..), fullSeasons)
 import Web.IFSC.Model (SeasonName(..))
@@ -22,5 +22,7 @@ main = do
   (FetchParams (StartSeason (SeasonName start)) (EndSeason (SeasonName end)) discipline baseUrl) <- execParser progOpts
   launchAff_ $ (runExceptT $ runReaderT (fullSeasons discipline (Just start) (Just end)) baseUrl) >>= case _ of
     Right _ -> log "fetch successful"
-    Left (FetchError e url body) -> logShow $ intersperse "\n" [ "=======", "At url: " <> url, printError e, "----", stringify body ]
+    Left (FetchError e url body) ->
+      log $
+        intercalate "\n" [ "=======", "At url: " <> url, printError e, "----", stringify body ]
 
