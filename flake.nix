@@ -49,7 +49,7 @@
                 dir = ./.;
 
                 foreign.xhr2.node_modules =
-                  npmlock2nix.node_modules { src = ./.; };
+                  npmlock2nix.v1.node_modules { src = ./.; };
               };
 
           npmlock2nix = import inputs.npmlock2nix { inherit pkgs; };
