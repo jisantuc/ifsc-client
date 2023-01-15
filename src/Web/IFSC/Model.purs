@@ -3,13 +3,14 @@ module Web.IFSC.Model where
 import Prelude
 
 import Control.Alternative ((<|>))
+import Csv as Csv
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError(..), toObject, toString, (.:))
-import Data.Array (intercalate)
+import Data.Array (intercalate, (:))
 import Data.Either (Either(..), note)
 import Data.Generic.Rep (class Generic)
 import Data.Int (fromString)
 import Data.Map as M
-import Data.Maybe (Maybe(..), maybe)
+import Data.Maybe (Maybe(..), fromMaybe, maybe)
 import Data.Show.Generic (genericShow)
 import Data.String (toLower)
 import Data.Tuple (Tuple(..))
@@ -188,8 +189,7 @@ instance DecodeJson CompetitionCategory where
     ]
 
 type EventFullResults =
-  { rank :: Array CompetitorResult
-  , eventName :: EventName
+  { ranking :: Array CompetitorResult
   }
 
 type CategorizedEventFullResults =
@@ -212,7 +212,7 @@ instance DecodeJson CompetitorResult where
     Just jObject -> do
       firstName <- jObject .: "firstname"
       lastName <- jObject .: "lastname"
-      rank <- jObject .: "rank"
+      rank <- fromMaybe 1000 <$> jObject .: "rank"
       rounds <- jObject .: "rounds"
       pure $ CompetitorResult { firstName, lastName, rank, rounds }
     Nothing -> Left $ UnexpectedValue json
@@ -232,9 +232,11 @@ instance DecodeJson Round where
       score <- jObject .: "score"
       -- the shape of the API responses changes over time, so decoding has to be
       -- flexible enough to handle several formats
-      ascents <- jObject .: "ascents" <|>
-        ( jObject .: "speed_elimination_stages" >>= (\obj -> obj .: "ascents")
-        )
+      ascents <- jObject .: "ascents"
+        <|>
+          ( jObject .: "speed_elimination_stages" >>= (\obj -> obj .: "ascents")
+          )
+        <|> (jObject .: "speed_elimination_stages")
       pure $ Round { roundName, score, ascents }
     Nothing -> Left $ UnexpectedValue json
 
@@ -290,7 +292,7 @@ decoderForStringMap js m =
     maybe (Left $ UnexpectedValue js) Right lookupResult
 
 type ResultAnalysisRow =
-  { seasonId :: SeasonId
+  { year :: SeasonName
   , eventName :: EventName
   , competitorName :: CompetitorName
   , rank :: Int
@@ -302,18 +304,32 @@ type ResultAnalysisRow =
   , competitionCategory :: CompetitionCategory
   }
 
+header :: String
+header = intercalate ","
+  [ "year"
+  , "eventName"
+  , "competitorName"
+  , "rank"
+  , "round"
+  , "top"
+  , "topTries"
+  , "zone"
+  , "zoneTries"
+  , "competitionCategory"
+  ]
+
 fromEventFullResults
-  :: SeasonId
+  :: SeasonName
   -> CategorizedEventFullResults
   -> Array ResultAnalysisRow
 fromEventFullResults
-  seasonId
+  seasonName
   eventFullResults = do
   (CompetitorResult crData@{ firstName, lastName, rounds }) <- eventFullResults.rank
   (Round round) <- rounds
   (Ascent ascent) <- round.ascents
   pure $
-    { seasonId
+    { year: seasonName
     , eventName: eventFullResults.eventName
     , competitorName: CompetitorName $ firstName <> " " <> lastName
     , rank: crData.rank
@@ -326,7 +342,8 @@ fromEventFullResults
     }
 
 toCsvLine :: ResultAnalysisRow -> String
-toCsvLine { seasonId
+toCsvLine
+  { year
   , eventName
   , competitorName
   , rank
@@ -337,19 +354,19 @@ toCsvLine { seasonId
   , zoneTries
   , competitionCategory
   } =
-  intercalate "," [
-    show seasonId,
-    show eventName,
-    show competitorName,
-    show rank,
-    show round,
-    show top,
-    show topTries,
-    show zone,
-    show zoneTries,
-    show competitionCategory
-  ]
+  intercalate ","
+    [ show year
+    , show eventName
+    , show competitorName
+    , show rank
+    , show round
+    , show top
+    , Csv.optional topTries
+    , show zone
+    , Csv.optional zoneTries
+    , show competitionCategory
+    ]
 
 toCsv :: Array ResultAnalysisRow -> String
 toCsv results =
-  intercalate "\n" $ toCsvLine <$> results
+  intercalate "\n" $ header : (toCsvLine <$> results)

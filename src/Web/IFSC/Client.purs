@@ -34,7 +34,6 @@ import Web.IFSC.Model
   , LeagueName(..)
   , NamedEventResult
   , ResultUrl(..)
-  , SeasonId(..)
   , SeasonLeagueResults
   , SeasonName(..)
   , ResultAnalysisRow
@@ -182,17 +181,16 @@ fullSeasons searchDiscipline fromYear toYear =
                 discipline == searchDiscipline
             )
             partialResults
-        allCategories = (_.category) <$> partialResults
       allFullResults <- traverse getEventFullResults ((\({ fullResultsUrl }) -> fullResultsUrl) <$> eventPartialResults)
       pure $ zipWith
-        (\category { rank, eventName } -> { category, rank, eventName })
-        allCategories
+        (\{ category, eventName } { ranking } -> { category, rank: ranking, eventName })
+        partialResults
         allFullResults
 
 allFullSeasons :: Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array CategorizedEventFullResults)
 allFullSeasons discipline = fullSeasons discipline Nothing Nothing
 
-analysisResultsForSeason :: SeasonId -> Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array ResultAnalysisRow)
-analysisResultsForSeason seasonId@(SeasonId year) discipline =
-  (\results -> results >>= fromEventFullResults seasonId) <$>
+analysisResultsForSeason :: SeasonName -> Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array ResultAnalysisRow)
+analysisResultsForSeason seasonName@(SeasonName year) discipline =
+  (\results -> results >>= fromEventFullResults seasonName) <$>
     fullSeasons discipline (Just year) (Just year)
