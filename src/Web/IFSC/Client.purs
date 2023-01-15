@@ -10,7 +10,7 @@ import Control.Monad.Except (ExceptT(..), except)
 import Control.Monad.Reader (ReaderT, lift)
 import Control.Monad.Reader.Class (ask)
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, encodeJson, printJsonDecodeError)
-import Data.Array (filter, last)
+import Data.Array (filter, last, zipWith)
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..), note)
 import Data.Foldable (fold, intercalate)
@@ -21,19 +21,24 @@ import Data.Traversable (traverse)
 import Effect.Aff (Aff)
 import Effect.Class.Console (log)
 import Web.IFSC.Model
-  ( Discipline
+  ( CategorizedEventFullResults
+  , Discipline
   , Event
   , EventFullResults
   , EventId(..)
+  , EventName(..)
   , EventResult(..)
   , LandingPage
   , LandingPageSeason(..)
   , LeagueId(..)
   , LeagueName(..)
+  , NamedEventResult
   , ResultUrl(..)
   , SeasonLeagueResults
   , SeasonName(..)
+  , ResultAnalysisRow
   , disciplineCategoryResults
+  , fromEventFullResults
   )
 
 data FetchError = FetchError Error String Json
@@ -105,11 +110,19 @@ getSeasonLeagueResults :: LeagueId -> WithConfig (ExceptT FetchError Aff) Season
 getSeasonLeagueResults (LeagueId league) =
   getJsonUrl $ "/results-api.php?api=season_leagues_results&league=" <> show league
 
-getEventResults :: EventId -> WithConfig (ExceptT FetchError Aff) (Array EventResult)
+getEventResults :: EventId -> WithConfig (ExceptT FetchError Aff) (Array NamedEventResult)
 getEventResults eventId = do
   resultsPage <- getJsonUrl $ "/results-api.php?api=event_results&event_id=" <> show eventId
-  log $ "Results available for " <> resultsPage.name
-  pure $ disciplineCategoryResults resultsPage
+  let (EventName eventName) = resultsPage.name
+  log $ "Results available for " <> eventName
+  pure $
+    ( \(EventResult { category, discipline, fullResultsUrl }) ->
+        { eventName: resultsPage.name
+        , category
+        , discipline
+        , fullResultsUrl
+        }
+    ) <$> disciplineCategoryResults resultsPage
 
 getEventFullResults :: ResultUrl -> WithConfig (ExceptT FetchError Aff) EventFullResults
 getEventFullResults (ResultUrl queryParam) = do
@@ -117,7 +130,11 @@ getEventFullResults (ResultUrl queryParam) = do
   log $ "Fetching event results at: " <> baseUrl <> queryParam
   getJsonUrl $ "/results-api.php?api=event_full_results&result_url=" <> queryParam
 
-fullSeasons :: Discipline -> Maybe Int -> Maybe Int -> WithConfig (ExceptT FetchError Aff) (Array EventFullResults)
+fullSeasons
+  :: Discipline
+  -> Maybe Int
+  -> Maybe Int
+  -> WithConfig (ExceptT FetchError Aff) (Array CategorizedEventFullResults)
 fullSeasons searchDiscipline fromYear toYear =
   let
     inRange =
@@ -153,17 +170,27 @@ fullSeasons searchDiscipline fromYear toYear =
         let
           allEventNames = _.event <$> allEvents
         in
-          intercalate "\n" allEventNames
+          intercalate "\n" (show <$> allEventNames)
       eventIds <- lift <<< except $ traverse getEventId allEvents
       eventPartialResultsArrArr <- traverse getEventResults eventIds
       let
+        partialResults = fold eventPartialResultsArrArr
         eventPartialResults =
           filter
-            ( \(EventResult { discipline }) ->
+            ( \({ discipline }) ->
                 discipline == searchDiscipline
-            ) $ fold eventPartialResultsArrArr
-      allFullResults <- traverse getEventFullResults ((\(EventResult { fullResultsUrl }) -> fullResultsUrl) <$> eventPartialResults)
-      pure allFullResults
+            )
+            partialResults
+      allFullResults <- traverse getEventFullResults ((\({ fullResultsUrl }) -> fullResultsUrl) <$> eventPartialResults)
+      pure $ zipWith
+        (\{ category, eventName } { ranking } -> { category, rank: ranking, eventName })
+        partialResults
+        allFullResults
 
-allFullSeasons :: Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array EventFullResults)
+allFullSeasons :: Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array CategorizedEventFullResults)
 allFullSeasons discipline = fullSeasons discipline Nothing Nothing
+
+analysisResultsForSeason :: SeasonName -> Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array ResultAnalysisRow)
+analysisResultsForSeason seasonName@(SeasonName year) discipline =
+  (\results -> results >>= fromEventFullResults seasonName) <$>
+    fullSeasons discipline (Just year) (Just year)

@@ -9,11 +9,13 @@ import Options.Applicative
   ( Parser
   , ParserInfo
   , ReadM
+  , command
   , eitherReader
   , fullDesc
   , header
   , help
   , helper
+  , hsubparser
   , info
   , int
   , long
@@ -48,6 +50,26 @@ derive instance Eq FetchParams
 instance Show FetchParams where
   show = genericShow
 
+data SeasonToCsvParams = SeasonToCsvParams SeasonName Discipline BaseUrl
+
+derive instance Generic SeasonToCsvParams _
+
+derive instance Eq SeasonToCsvParams
+
+instance Show SeasonToCsvParams where
+  show = genericShow
+
+data ProgramMode
+  = FetchSeasons FetchParams
+  | SeasonToCsv SeasonToCsvParams
+
+derive instance Eq ProgramMode
+
+derive instance Generic ProgramMode _
+
+instance Show ProgramMode where
+  show = genericShow
+
 startSeason :: Parser StartSeason
 startSeason = StartSeason <<< SeasonName <$> option int
   ( long "from-year"
@@ -62,6 +84,13 @@ endSeason = EndSeason <<< SeasonName <$> option int
       <> short 't'
       <> help "Last year to consider results from"
       <> value 2022
+  )
+
+seasonName :: Parser SeasonName
+seasonName = SeasonName <$> option int
+  ( long "for-year"
+      <> short 'y'
+      <> help "Year to dump results to csv for"
   )
 
 disciplineReader :: ReadM Discipline
@@ -91,9 +120,25 @@ baseUrl = BaseUrl <$> strOption
 fetchParser :: Parser FetchParams
 fetchParser = FetchParams <$> startSeason <*> endSeason <*> discipline <*> baseUrl
 
-progOpts :: ParserInfo FetchParams
-progOpts = info (fetchParser <**> helper)
-  ( fullDesc
-      <> progDesc "Fetch IFSC results for a discipline in a range of years"
-      <> header "ifsc-stats - a CLI client for the undocumented IFSC API"
-  )
+seasonToCsvParser :: Parser SeasonToCsvParams
+seasonToCsvParser = SeasonToCsvParams <$> seasonName <*> discipline <*> baseUrl
+
+progOpts :: ParserInfo ProgramMode
+progOpts =
+  let
+    seasonToCsvMode = SeasonToCsv <$> (seasonToCsvParser <**> helper)
+    fetchSeasonsMode = FetchSeasons <$> (fetchParser <**> helper)
+  in
+    info
+      ( hsubparser $
+          ( command "season-to-csv" (info seasonToCsvMode (progDesc "write results for a single season to csv"))
+              <> command "fetch-seasons-validate"
+                ( info fetchSeasonsMode
+                    (progDesc "Verify that response parsing succeeds over a range of seasons")
+                )
+          )
+      )
+      ( fullDesc
+          <> progDesc "Fetch IFSC results to an analysis-friendly format"
+          <> header "ifsc-stats - a CLI client for the undocumented IFSC API"
+      )
