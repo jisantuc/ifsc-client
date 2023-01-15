@@ -167,3 +167,7 @@ fullSeasons searchDiscipline fromYear toYear =
 
 allFullSeasons :: Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array EventFullResults)
 allFullSeasons discipline = fullSeasons discipline Nothing Nothing
+
+competitorResultsForSeason :: SeasonId -> Discipline -> ReaderT BaseUrl (ExceptT Error Aff) (Array ResultAnalysisRow)
+competitorResultsForSeason seasonId discipline =
+        pure []

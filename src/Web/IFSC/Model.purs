@@ -107,6 +107,18 @@ derive newtype instance Show LeagueId
 
 derive newtype instance DecodeJson LeagueId
 
+newtype EventName = EventName String
+
+derive newtype instance DecodeJson EventName
+
+derive newtype instance Show EventName
+
+newtype CompetitorName = CompetitorName String
+
+derive newtype instance DecodeJson CompetitorName
+
+derive newtype instance Show CompetitorName
+
 worldCupsAndWorldChampionships :: LeagueName
 worldCupsAndWorldChampionships = LeagueName "World Cups and World Championships"
 
@@ -119,7 +131,7 @@ type SeasonLeagueResults =
 -- about converting from json to dates for now; broad strokes statements are
 -- maybe enough to get started
 type Event =
-  { event :: String
+  { event :: EventName
   , url :: String
   }
 
@@ -259,3 +271,17 @@ decoderForStringMap js m =
     lookupResult = toLower <$> toString js >>= (flip M.lookup) m
   in
     maybe (Left $ UnexpectedValue js) Right lookupResult
+
+type ResultAnalysisRow = {
+  season :: SeasonId,
+  eventName :: EventName,
+  seasonEventOrder :: Int,
+  competitorName :: CompetitorName,
+  ranking :: Int,
+  round :: RoundName,
+  top :: Boolean,
+  topTries :: Int,
+  zone :: Boolean,
+  zoneTries :: Int,
+  competitionCategory :: CompetitionCategory
+}
