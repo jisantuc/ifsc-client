@@ -9,3 +9,6 @@
 /.psa*
 /.spago
 .direnv
+
+# files generated from data in the IFSC REST API
+ard
