@@ -21,7 +21,8 @@ import Data.Traversable (traverse)
 import Effect.Aff (Aff)
 import Effect.Class.Console (log)
 import Web.IFSC.Model
-  ( Discipline
+  ( CategorizedEventFullResults
+  , Discipline
   , Event
   , EventFullResults
   , EventId(..)
@@ -33,10 +34,12 @@ import Web.IFSC.Model
   , LeagueName(..)
   , NamedEventResult
   , ResultUrl(..)
+  , SeasonId(..)
   , SeasonLeagueResults
   , SeasonName(..)
-  , CategorizedEventFullResults
+  , ResultAnalysisRow
   , disciplineCategoryResults
+  , fromEventFullResults
   )
 
 data FetchError = FetchError Error String Json
@@ -189,3 +192,7 @@ fullSeasons searchDiscipline fromYear toYear =
 allFullSeasons :: Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array CategorizedEventFullResults)
 allFullSeasons discipline = fullSeasons discipline Nothing Nothing
 
+analysisResultsForSeason :: SeasonId -> Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array ResultAnalysisRow)
+analysisResultsForSeason seasonId@(SeasonId year) discipline =
+  (\results -> results >>= fromEventFullResults seasonId) <$>
+    fullSeasons discipline (Just year) (Just year)

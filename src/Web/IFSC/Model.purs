@@ -4,6 +4,7 @@ import Prelude
 
 import Control.Alternative ((<|>))
 import Data.Argonaut (class DecodeJson, Json, JsonDecodeError(..), toObject, toString, (.:))
+import Data.Array (intercalate)
 import Data.Either (Either(..), note)
 import Data.Generic.Rep (class Generic)
 import Data.Int (fromString)
@@ -303,12 +304,10 @@ type ResultAnalysisRow =
 
 fromEventFullResults
   :: SeasonId
-  -> CompetitionCategory
-  -> EventFullResults
+  -> CategorizedEventFullResults
   -> Array ResultAnalysisRow
 fromEventFullResults
   seasonId
-  competitionCategory
   eventFullResults = do
   (CompetitorResult crData@{ firstName, lastName, rounds }) <- eventFullResults.rank
   (Round round) <- rounds
@@ -323,6 +322,34 @@ fromEventFullResults
     , topTries: ascent.topTries
     , zone: ascent.zone
     , zoneTries: ascent.zoneTries
-    , competitionCategory
+    , competitionCategory: eventFullResults.category
     }
 
+toCsvLine :: ResultAnalysisRow -> String
+toCsvLine { seasonId
+  , eventName
+  , competitorName
+  , rank
+  , round
+  , top
+  , topTries
+  , zone
+  , zoneTries
+  , competitionCategory
+  } =
+  intercalate "," [
+    show seasonId,
+    show eventName,
+    show competitorName,
+    show rank,
+    show round,
+    show top,
+    show topTries,
+    show zone,
+    show zoneTries,
+    show competitionCategory
+  ]
+
+toCsv :: Array ResultAnalysisRow -> String
+toCsv results =
+  intercalate "\n" $ toCsvLine <$> results
