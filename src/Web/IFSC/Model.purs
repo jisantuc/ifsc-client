@@ -137,7 +137,7 @@ type Event =
 
 type EventResultsPage =
   { d_cats :: Array EventResult
-  , name :: String
+  , name :: EventName
   }
 
 disciplineCategoryResults :: EventResultsPage -> Array EventResult
@@ -162,6 +162,13 @@ instance DecodeJson EventResult where
 
     Nothing -> Left $ UnexpectedValue json
 
+type NamedEventResult =
+  { eventName :: EventName
+  , category :: CompetitionCategory
+  , discipline :: Discipline
+  , fullResultsUrl :: ResultUrl
+  }
+
 data CompetitionCategory
   = Men
   | Women
@@ -180,12 +187,20 @@ instance DecodeJson CompetitionCategory where
     ]
 
 type EventFullResults =
-  { ranking :: Array CompetitorResult
+  { rank :: Array CompetitorResult
+  , eventName :: EventName
+  }
+
+type CategorizedEventFullResults =
+  { rank :: Array CompetitorResult
+  , eventName :: EventName
+  , category :: CompetitionCategory
   }
 
 newtype CompetitorResult = CompetitorResult
   { firstName :: String
   , lastName :: String
+  , rank :: Int
   , rounds :: Array Round
   }
 
@@ -196,8 +211,9 @@ instance DecodeJson CompetitorResult where
     Just jObject -> do
       firstName <- jObject .: "firstname"
       lastName <- jObject .: "lastname"
+      rank <- jObject .: "rank"
       rounds <- jObject .: "rounds"
-      pure $ CompetitorResult { firstName, lastName, rounds }
+      pure $ CompetitorResult { firstName, lastName, rank, rounds }
     Nothing -> Left $ UnexpectedValue json
 
 newtype Round = Round
@@ -272,16 +288,41 @@ decoderForStringMap js m =
   in
     maybe (Left $ UnexpectedValue js) Right lookupResult
 
-type ResultAnalysisRow = {
-  season :: SeasonId,
-  eventName :: EventName,
-  seasonEventOrder :: Int,
-  competitorName :: CompetitorName,
-  ranking :: Int,
-  round :: RoundName,
-  top :: Boolean,
-  topTries :: Int,
-  zone :: Boolean,
-  zoneTries :: Int,
-  competitionCategory :: CompetitionCategory
-}
+type ResultAnalysisRow =
+  { seasonId :: SeasonId
+  , eventName :: EventName
+  , competitorName :: CompetitorName
+  , rank :: Int
+  , round :: RoundName
+  , top :: Boolean
+  , topTries :: Maybe Int
+  , zone :: Boolean
+  , zoneTries :: Maybe Int
+  , competitionCategory :: CompetitionCategory
+  }
+
+fromEventFullResults
+  :: SeasonId
+  -> CompetitionCategory
+  -> EventFullResults
+  -> Array ResultAnalysisRow
+fromEventFullResults
+  seasonId
+  competitionCategory
+  eventFullResults = do
+  (CompetitorResult crData@{ firstName, lastName, rounds }) <- eventFullResults.rank
+  (Round round) <- rounds
+  (Ascent ascent) <- round.ascents
+  pure $
+    { seasonId
+    , eventName: eventFullResults.eventName
+    , competitorName: CompetitorName $ firstName <> " " <> lastName
+    , rank: crData.rank
+    , round: round.roundName
+    , top: ascent.top
+    , topTries: ascent.topTries
+    , zone: ascent.zone
+    , zoneTries: ascent.zoneTries
+    , competitionCategory
+    }
+
