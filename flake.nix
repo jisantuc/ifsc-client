@@ -35,6 +35,7 @@
                     node-path
                     optparse
                     prelude
+                    stringutils
                   ];
 
                 test-dependencies =

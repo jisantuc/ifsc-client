@@ -4,12 +4,19 @@ import Prelude
 
 import Affjax (Error(..))
 import Affjax.Node (get)
-import Affjax.ResponseFormat (json)
-import Affjax.ResponseHeader (ResponseHeader)
+import Affjax.ResponseFormat (string)
 import Control.Monad.Except (ExceptT(..), except)
 import Control.Monad.Reader (ReaderT, lift)
 import Control.Monad.Reader.Class (ask)
-import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, encodeJson, printJsonDecodeError)
+import Data.Argonaut
+  ( class DecodeJson
+  , Json
+  , JsonDecodeError
+  , decodeJson
+  , encodeJson
+  , printJsonDecodeError
+  )
+import Data.Argonaut.Decode (parseJson)
 import Data.Array (filter, last, zipWith)
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..), note)
@@ -17,6 +24,7 @@ import Data.Foldable (fold, intercalate)
 import Data.Int (fromString)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String (Pattern(..), split)
+import Data.String.Utils (lines, startsWith)
 import Data.Traversable (traverse)
 import Effect.Aff (Aff)
 import Effect.Class.Console (log)
@@ -64,7 +72,12 @@ getEventId { url } =
     eventId = lastSegment >>=
       ( \s ->
           note
-            ( FetchError (RequestContentError $ "Could not read last url segment to an int in url: " <> url) url (encodeJson {})
+            ( FetchError
+                ( RequestContentError $
+                    "Could not read last url segment to an int in url: " <> url
+                )
+                url
+                (encodeJson {})
             ) $
             EventId <$> fromString s
       )
@@ -81,15 +94,26 @@ getDecodedBody
   :: forall a
    . forall r
    . DecodeJson a
-  => Either Error ({ body :: Json, headers :: Array ResponseHeader | r })
+  => Either Error ({ body :: Json | r })
   -> Either Error a
-getDecodedBody = case _ of
-  Right a ->
-    ( lmap adaptError
-        <<< decodeJson
-        $ a.body
-    )
-  Left e -> Left e
+getDecodedBody =
+  case _ of
+    Right a ->
+      ( lmap adaptError
+          <<< decodeJson
+          $ a.body
+      )
+    Left e -> Left e
+
+toJsonResponse :: forall r. { body :: String | r } -> Either Error { body :: Json | r }
+toJsonResponse record@{ body } =
+  let
+    bodyLines = filter (\line -> not $ startsWith line "<") (lines body)
+    jsonLine = note (RequestContentError "No non-XML lines in response") $
+      last bodyLines
+    parsed = jsonLine >>= (\line -> lmap adaptError $ parseJson line)
+  in
+    (\parsedJson -> record { body = parsedJson }) <$> parsed
 
 getJsonUrl :: forall a. DecodeJson a => String -> WithConfig (ExceptT FetchError Aff) a
 getJsonUrl urlPart =
@@ -101,7 +125,7 @@ getJsonUrl urlPart =
           response@(Right { body }) ->
             lmap (\e -> FetchError e fullUrl body) $ getDecodedBody response
           Left e -> Left $ FetchError e fullUrl (encodeJson {})
-      ) <$> get json fullUrl
+      ) <$> ((\resp -> resp >>= toJsonResponse) <$> get string fullUrl)
 
 getLandingPage :: WithConfig (ExceptT FetchError Aff) LandingPage
 getLandingPage = getJsonUrl "/results-api.php?api=index"
@@ -149,7 +173,8 @@ fullSeasons searchDiscipline fromYear toYear =
     do
       { seasons } <- getLandingPage
       let seasonsInRange = filter inRange seasons
-      log $ "Fetching events for the following seasons: " <> show ((\(LandingPageSeason { name }) -> name) <$> seasonsInRange)
+      log $ "Fetching events for the following seasons: " <>
+        show ((\(LandingPageSeason { name }) -> name) <$> seasonsInRange)
       seasonLeagueEvents <- traverse
         ( \(LandingPageSeason { leagues }) ->
             let
@@ -181,16 +206,25 @@ fullSeasons searchDiscipline fromYear toYear =
                 discipline == searchDiscipline
             )
             partialResults
-      allFullResults <- traverse getEventFullResults ((\({ fullResultsUrl }) -> fullResultsUrl) <$> eventPartialResults)
+      allFullResults <- traverse getEventFullResults
+        ( (\({ fullResultsUrl }) -> fullResultsUrl)
+            <$> eventPartialResults
+        )
       pure $ zipWith
         (\{ category, eventName } { ranking } -> { category, rank: ranking, eventName })
         partialResults
         allFullResults
 
-allFullSeasons :: Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array CategorizedEventFullResults)
+allFullSeasons
+  :: Discipline
+  -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array CategorizedEventFullResults)
 allFullSeasons discipline = fullSeasons discipline Nothing Nothing
 
-analysisResultsForSeason :: SeasonName -> Discipline -> ReaderT BaseUrl (ExceptT FetchError Aff) (Array ResultAnalysisRow)
+analysisResultsForSeason
+  :: SeasonName
+  -> Discipline
+  -> ReaderT BaseUrl (ExceptT FetchError Aff)
+       (Array ResultAnalysisRow)
 analysisResultsForSeason seasonName@(SeasonName year) discipline =
   (\results -> results >>= fromEventFullResults seasonName) <$>
     fullSeasons discipline (Just year) (Just year)
