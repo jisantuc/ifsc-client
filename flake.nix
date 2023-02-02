@@ -17,6 +17,7 @@
       (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          analysis = (((import ./analysis.nix) { inherit pkgs; }));
           ps-tools = inputs.ps-tools.legacyPackages.${system};
           purs-nix = inputs.purs-nix { inherit system; };
 
@@ -72,12 +73,13 @@
                     ps-tools.for-0_15.purescript-language-server
                     purs-nix.esbuild
                     purs-nix.purescript
-                    (((import ./analysis.nix) { inherit pkgs; })).out
+                    analysis.python
                   ];
 
                 shellHook =
                   ''
                     alias watch="find src | entr -s 'echo bundling; purs-nix bundle'"
+                    export MYPYPATH=${analysis.mypyPath}
                   '';
               };
         }

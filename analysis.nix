@@ -5,7 +5,8 @@
       ps.pandas
       ps.seaborn
     ]);
-    python = with pkgs; {
-      out = pkgs.python311.withPackages pythonPackages;
+    python = with pkgs; rec {
+      python = pkgs.python311.withPackages pythonPackages;
+      mypyPath = "${python}/bin";
     };
   in python
