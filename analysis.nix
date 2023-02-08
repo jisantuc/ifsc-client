@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
   pythonPackages = (ps: [
+    ps.black
     ps.jinja2
     ps.pandas
     ps.seaborn
@@ -8,7 +9,6 @@ let
   ]);
   python = with pkgs; rec {
     python = pkgs.python311.withPackages pythonPackages;
-    mypyPath = "${python}/bin";
   };
 in
 python

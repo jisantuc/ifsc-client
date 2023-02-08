@@ -10,5 +10,6 @@ npm install
 
 purs-nix test
 
+black --check .
 mkdir -p figures
 python3 analysis/questions.py

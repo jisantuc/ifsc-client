@@ -79,7 +79,6 @@
                 shellHook =
                   ''
                     alias watch="find src | entr -s 'echo bundling; purs-nix bundle'"
-                    export MYPYPATH=${analysis.mypyPath}
                   '';
               };
         }
