@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt  # type: ignore
 import pandas as pd  # type: ignore
 from pandas.io.formats.style import Styler  # type: ignore
