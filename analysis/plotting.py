@@ -3,7 +3,7 @@ from typing import Callable, Optional
 
 import matplotlib.pyplot as plt  # type: ignore
 import pandas as pd  # type: ignore
-from pandas.core.groupby import GroupBy
+from pandas.core.groupby import GroupBy  # type: ignore
 import seaborn as sns  # type: ignore
 
 
@@ -22,6 +22,12 @@ def stripplot_by_round(
     grouped = grouper(filtered)
     plottable = grouped[column].mean().reset_index()
     sns.stripplot(
-        plottable, x=column, y="round", hue=facet_col, order=_round_order[::-1], ax=ax
+        plottable,
+        x=column,
+        y="round",
+        hue=facet_col,
+        order=_round_order[::-1],
+        ax=ax,
+        alpha=0.7 if facet_col is not None else 1,
     )
     plt.tight_layout()

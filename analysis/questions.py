@@ -3,9 +3,8 @@ from typing import List
 
 import pandas as pd  # type: ignore
 
-
 from difficulty import difficulty_plots
-from separation import score_df
+from separation import separation_figures
 
 
 def validate_load_csv(p: Path) -> pd.DataFrame:
@@ -38,9 +37,8 @@ def get_unique_years(df: pd.DataFrame) -> List[int]:
 
 def main():
     df = load_csvs("./ard")
-    scored = score_df(df)
-    scored.to_csv("ranks-sanity-check.csv")
-    # difficulty_plots(df)
+    separation_figures(df)
+    difficulty_plots(df)
 
 
 if __name__ == "__main__":
