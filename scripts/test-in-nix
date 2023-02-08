@@ -11,4 +11,4 @@ npm install
 purs-nix test
 
 black --check .
-mypy .
+mypy --strict .

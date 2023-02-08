@@ -17,7 +17,7 @@ def _ranks_for_sorted_ser(df: pd.DataFrame) -> pd.Series:
     return out
 
 
-def _separated_by(diff_series: pd.Series):
+def _separated_by(diff_series: pd.Series) -> str:
     top_diff = diff_series["top"]
     zone_diff = diff_series["zone"]
     top_attempts_diff = diff_series["topTries"]

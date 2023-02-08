@@ -30,7 +30,7 @@ def load_csvs(dir_rel_path: str) -> pd.DataFrame:
     return pd.concat(validate_load_csv(f) for f in csvs)
 
 
-def main():
+def main() -> None:
     df = load_csvs("./ard")
     separation_figures(df)
     difficulty_plots(df)
