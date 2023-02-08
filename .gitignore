@@ -12,7 +12,11 @@
 
 # files generated from data in the IFSC REST API
 ard
-figures
 
 # python things
 __pycache__
+
+# outputs
+figures
+*.svg
+*.html
