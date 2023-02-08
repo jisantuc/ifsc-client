@@ -31,10 +31,6 @@ def load_csvs(dir_rel_path: str) -> pd.DataFrame:
     return pd.concat(validate_load_csv(f) for f in csvs)
 
 
-def get_unique_years(df: pd.DataFrame) -> List[int]:
-    return df["year"].unique().tolist()
-
-
 def main():
     df = load_csvs("./ard")
     separation_figures(df)
