@@ -1,3 +1,4 @@
+from typing import Optional
 import matplotlib.pyplot as plt  # type: ignore
 import pandas as pd  # type: ignore
 import seaborn as sns  # type: ignore

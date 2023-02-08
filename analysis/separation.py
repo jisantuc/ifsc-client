@@ -1,4 +1,3 @@
-from typing import Callable
 
 import matplotlib.pyplot as plt  # type: ignore
 import pandas as pd  # type: ignore
