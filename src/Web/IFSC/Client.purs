@@ -8,16 +8,9 @@ import Affjax.ResponseFormat (string)
 import Control.Monad.Except (ExceptT(..), except)
 import Control.Monad.Reader (ReaderT, lift)
 import Control.Monad.Reader.Class (ask)
-import Data.Argonaut
-  ( class DecodeJson
-  , Json
-  , JsonDecodeError
-  , decodeJson
-  , encodeJson
-  , printJsonDecodeError
-  )
+import Data.Argonaut (class DecodeJson, Json, JsonDecodeError, decodeJson, encodeJson, printJsonDecodeError)
 import Data.Argonaut.Decode (parseJson)
-import Data.Array (filter, last, zipWith)
+import Data.Array (filter, last, length, zipWith)
 import Data.Bifunctor (lmap)
 import Data.Either (Either(..), note)
 import Data.Foldable (fold, intercalate)
@@ -28,26 +21,7 @@ import Data.String.Utils (lines, startsWith)
 import Data.Traversable (traverse)
 import Effect.Aff (Aff)
 import Effect.Class.Console (log)
-import Web.IFSC.Model
-  ( CategorizedEventFullResults
-  , Discipline
-  , Event
-  , EventFullResults
-  , EventId(..)
-  , EventName(..)
-  , EventResult(..)
-  , LandingPage
-  , LandingPageSeason(..)
-  , LeagueId(..)
-  , LeagueName(..)
-  , NamedEventResult
-  , ResultUrl(..)
-  , SeasonLeagueResults
-  , SeasonName(..)
-  , ResultAnalysisRow
-  , disciplineCategoryResults
-  , fromEventFullResults
-  )
+import Web.IFSC.Model (CategorizedEventFullResults, Discipline, Event, EventFullResults, EventId(..), EventName(..), EventResult(..), LandingPage, LandingPageSeason(..), LeagueId(..), LeagueName(..), NamedEventResult, ResultUrl(..), SeasonLeagueResults, SeasonName(..), ResultAnalysisRow, disciplineCategoryResults, fromEventFullResults)
 
 data FetchError = FetchError Error String Json
 
@@ -212,7 +186,7 @@ fullSeasons searchDiscipline fromYear toYear =
         )
       pure $ zipWith
         (\{ category, eventName } { ranking } -> { category, rank: ranking, eventName })
-        partialResults
+        eventPartialResults
         allFullResults
 
 allFullSeasons

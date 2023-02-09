@@ -17,6 +17,7 @@
       (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          analysis = (((import ./analysis.nix) { inherit pkgs; }));
           ps-tools = inputs.ps-tools.legacyPackages.${system};
           purs-nix = inputs.purs-nix { inherit system; };
 
@@ -72,6 +73,7 @@
                     ps-tools.for-0_15.purescript-language-server
                     purs-nix.esbuild
                     purs-nix.purescript
+                    analysis.python
                   ];
 
                 shellHook =

@@ -9,3 +9,6 @@ purs-tidy check "test/**/*.purs"
 npm install
 
 purs-nix test
+
+black --check .
+mypy --strict .
