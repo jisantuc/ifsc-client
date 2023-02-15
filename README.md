@@ -42,7 +42,7 @@ This series of commands will:
 You could also technically run the CLI with [`spago`]. To do so, you'd need to
 copy project configuration over to your `package.dhall` and `spago.dhall` files.
 If you've attempted this and believe it should have worked but it didn't for some
-reason, please leave a thumbs up on #11.
+reason, please leave a thumbs up on [#11].
 
 ### Analysis scripts
 
@@ -83,7 +83,7 @@ however you want, but you'll have a much easier time with `nix`.
 
 ### Without `nix`
 
-If you'd like this, please leave a thumbs up on #11.
+If you'd like this, please leave a thumbs up on [#11].
 
 Disclaimers
 -----
@@ -96,6 +96,7 @@ and conditions. I believe that use here is not automated data collection / data 
 since it's not automated and the interaction with IFSC is restricted to well-formed HTTP
 requests to an unauthenticated REST API. You should make your own judgments on that front.
 
+[#11]: https://github.com/jisantuc/ifsc-client/issues/11
 [flakes]: https://nixos.wiki/wiki/Flakes
 [`nix`]: https://nixos.org/download.html
 [`nix develop`]: https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-develop.html
