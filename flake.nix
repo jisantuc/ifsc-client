@@ -56,6 +56,17 @@
 
           npmlock2nix = import inputs.npmlock2nix { inherit pkgs; };
 
+          cli-client-packages = with pkgs;
+            [
+              entr
+              nodejs-14_x
+              nodePackages.purs-tidy
+              (ps.command { })
+              ps-tools.for-0_15.purescript-language-server
+              purs-nix.esbuild
+              purs-nix.purescript
+            ];
+
         in
         {
           packages.default = ps.modules.Main.bundle { };
@@ -64,15 +75,8 @@
             pkgs.mkShell
               {
                 packages =
-                  with pkgs;
                   [
-                    entr
-                    nodejs-14_x
-                    nodePackages.purs-tidy
-                    (ps.command { })
-                    ps-tools.for-0_15.purescript-language-server
-                    purs-nix.esbuild
-                    purs-nix.purescript
+                    cli-client-packages
                     analysis.python
                   ];
 
@@ -81,6 +85,16 @@
                     alias watch="find src | entr -s 'echo bundling; purs-nix bundle'"
                   '';
               };
+
+          devShells.cli-client =
+            pkgs.mkShell {
+              packages = cli-client-packages;
+            };
+
+          devShells.analysis =
+            pkgs.mkShell {
+              packages = [ analysis.python ];
+            };
         }
       );
 }
