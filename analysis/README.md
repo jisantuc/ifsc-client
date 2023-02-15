@@ -17,7 +17,7 @@ a climber's attempts on a boulder, and columns are:
 - `topTries`: (`int`) how many tries it took the climber to top the boulder
 - `zone`: (`int`, but only 1 or 0) whether the climber achieved the zone hold on the boulder
 - `zoneTries`: (`int`) how many tries it took the climber to reach the zone on the boulder
-- `competitionCategory`: 
+- `competitionCategory`: (`enum`) one of `Men` or `Women`
 
 If you want to run these scripts, then, from the root of the repository, you can run:
 
