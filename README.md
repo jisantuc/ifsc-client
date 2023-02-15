@@ -25,6 +25,9 @@ nix develop .#cli-client # 1
 npm install # 2
 # choose a year to write results to csv
 purs-nix run season-to-csv -y 2021 -u https://components.ifsc-climbing.org # 3
+
+docker compose -f docker-compose.test.yml up -d # 4
+purs-nix test # 5
 ```
 
 This series of commands will:
@@ -32,6 +35,8 @@ This series of commands will:
 1. enter the `cli-client` development shell configured in this repo's `flake.nix`
 2. install node modules specified in the `package-lock.json` file
 3. run the `season-to-csv` command for year 2021, using the live IFSC service as a base URL
+4. start a mock server to run tests against
+5. run all of the client's tests
 
 You could also technically run the CLI with [`spago`]. To do so, you'd need to
 copy project configuration over to your `package.dhall` and `spago.dhall` files.
