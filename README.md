@@ -46,7 +46,10 @@ reason, please leave a thumbs up on [#11].
 
 ### Analysis scripts
 
-Once you have all of the data, you can analyze it. I threw all of the CSVs into a
+Once you have all of the data, you can analyze it. Source files for data analysis
+are in [`./analysis`](./analysis).
+
+I threw all of the CSVs from the CLI client into a
 folder at the top of this directory called `ard` (for "analysis-ready data").
 You can see the whole workflow in the `main` function defined in
 [`analysis/questions.py`](./analysis/questions.py). In short, it's:
