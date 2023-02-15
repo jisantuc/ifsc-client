@@ -75,6 +75,10 @@ PureScript dependencies can be found in the `flake.nix` `ps = ...` block. Python
 dependencies can be found in `analysis.nix`. You're free to get things set up
 however you want, but you'll have a much easier time with `nix`.
 
+### Without `nix`
+
+If you'd like this, please leave a thumbs up on #11.
+
 Disclaimers
 -----
 
