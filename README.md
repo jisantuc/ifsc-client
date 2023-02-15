@@ -23,6 +23,7 @@ The easiest way to run the CLI program is with [`nix`]. To do so, you can run:
 ```bash
 nix develop .#cli-client # 1
 npm install # 2
+
 # choose a year to write results to csv
 purs-nix run season-to-csv -y 2021 -u https://components.ifsc-climbing.org # 3
 
@@ -41,7 +42,7 @@ This series of commands will:
 You could also technically run the CLI with [`spago`]. To do so, you'd need to
 copy project configuration over to your `package.dhall` and `spago.dhall` files.
 If you've attempted this and believe it should have worked but it didn't for some
-reason, please open an issue.
+reason, please leave a thumbs up on #11.
 
 ### Analysis scripts
 
