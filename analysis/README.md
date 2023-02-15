@@ -36,10 +36,12 @@ This snippet:
 
 This will work _if and ony if_:
 
-- you run it from the root of the repository
 - you've already downloaded some data to the `ard` directory
+- you run the snippet from the `analysis` `nix` development shell or choose another way to install
+  dependencies
+- you run the snippet from the root of the repository
 
-You can change the directory that the script looks in by editing the
+You can change the directory that the script looks in from `ard` to something else by editing the
 `load_csvs` call in `questions.py`.
 
 The scripts depend on:
@@ -59,4 +61,5 @@ These provide:
 4. `tabulate`: markdown support for pandas
 
 You can choose whatever method you want to set up a python environment with these dependencies,
-and it Should Work:tm:.
+and it Should Work:tm:. If you want explicit instructions for a non-nix setup, please leave a thumbs
+up on [#11](https://github.com/jisantuc/ifsc-client/issues/11).
